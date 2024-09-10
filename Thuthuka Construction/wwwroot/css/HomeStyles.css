@@ -1,0 +1,237 @@
+﻿body {
+    padding-top: 56px;
+}
+
+/* Navbar logo styling */
+.navbar-logo {
+    height: 100px;
+    width: 100PX;
+}
+
+/* Ensure the navbar height doesn't increase */
+.navbar {
+    height: 70px;
+}
+
+/* Edited*/
+.intro-section {
+    background: url('../images/18.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 100px 0;
+    color: #fff;
+    text-align: center;
+    height: 700px;
+    width: auto;
+}
+
+    /* Edited*/
+    .intro-section h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    /* Edited*/
+    .intro-section p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.25rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+
+
+
+.hero-section {
+    background: url('../images/19.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 100px 0;
+    color: #fff;
+    text-align: center;
+}
+
+
+
+    .hero-section h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-color: rgba(52, 50, 50, 0.5);
+        padding: 10px;
+        display: inline-block;
+    }
+
+    .hero-section p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.25rem;
+        margin-bottom: 40px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: rgba(52, 50, 50, 0.5);
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+    .hero-section .btn {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        padding: 10px 30px;
+        font-size: 1.2rem;
+    }
+
+.project-stats h3 {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+.projects-section {
+    background: url('../images/2.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 100px 0;
+    color: #fff;
+}
+
+    .projects-section .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .projects-section .col-md-6 {
+        background-color: rgba(52, 50, 50, 0.5); /* White background for card-like effect */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Card shadow */
+        margin: 10px; /* Spacing between cards */
+        flex: 0 0 48%; /* Take up 48% of the row's width, allowing for two columns with space in between */
+        text-align: left; /* Align text to the left for better readability */
+    }
+
+    .projects-section h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.75rem;
+        margin-bottom: 20px;
+    }
+
+    .projects-section p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.25rem;
+        margin-bottom: 20px;
+    }
+
+
+/* Roadmap Section */
+.roadmap-section {
+    background-color: #f0f0f0;
+    padding: 60px 0;
+}
+
+    .roadmap-section h3 {
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 40px;
+    }
+
+.roadmap-card {
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .roadmap-card .card-body {
+        padding: 30px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+    }
+
+    .roadmap-card h5 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .roadmap-card p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.1rem;
+    }
+
+    .roadmap-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+        .roadmap-card:hover .card-body {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+/* Cost Estimate Section */
+.cost-estimate-section {
+    background: url('../images/22.jpg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+    padding-bottom: 60px;
+}
+
+/* Footer Section */
+.footer-section {
+    background-color: #343a40;
+    color: #fff;
+}
+
+    .footer-section p {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .footer-section .social-links a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .footer-section .social-links a:hover {
+            text-decoration: underline;
+        }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 50px 0;
+    }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+        }
+
+    .project-stats h3 {
+        font-size: 1.5rem;
+    }
+
+    .projects-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .projects-section p {
+        font-size: 1.1rem;
+    }
+
+    .cost-estimate-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .roadmap-card {
+        margin-bottom: 20px;
+    }
+}
