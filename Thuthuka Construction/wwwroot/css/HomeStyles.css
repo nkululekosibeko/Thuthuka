@@ -2,17 +2,6 @@
     padding-top: 56px;
 }
 
-/* Navbar logo styling */
-.navbar-logo {
-    height: 100px;
-    width: 100PX;
-}
-
-/* Ensure the navbar height doesn't increase */
-.navbar {
-    height: 70px;
-}
-
 /* Edited*/
 .intro-section {
     background: url('../images/18.jpg') no-repeat center center;

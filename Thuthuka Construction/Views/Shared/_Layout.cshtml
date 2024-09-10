@@ -3,16 +3,47 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Thuthuka_Construction</title>
+    <title>@ViewData["Title"] - Thuthuka Constructions</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Thuthuka_Construction.styles.css" asp-append-version="true" />   
+    <link rel="stylesheet" href="~/Thuthuka_Construction.styles.css" asp-append-version="true" />
+    <style>
+        /* Make the navbar fixed (stationary) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100px;
+            z-index: 1000; /* Ensure it stays above the content */
+            margin-bottom: 200px; /* Add margin bottom to push content far down */
+        }
+
+        /* Style for the logo without affecting navbar height */
+        .navbar-brand img {
+            max-height: 150px; /* Maintain fixed logo size */
+            width: 150px;
+        }
+
+        /* Ensure content scrolls behind the navbar */
+        main {
+            padding-top: 150px; /* Adjust to ensure content does not overlap with the navbar */
+        }
+
+        /* Optional: Add box-shadow for better visual separation */
+        .navbar {
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Thuthuka_Construction</a>
+                <!-- Add logo image to the far left of the navbar -->
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <img src="~/images/Thuthuka Logo.png" alt="Logo" />
+                    Thuthuka_Construction
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,6 +62,7 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
