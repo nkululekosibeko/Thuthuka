@@ -47,6 +47,22 @@ namespace Thuthuka_Construction.Controllers
             return View(project);
         }
 
+        public async Task<IActionResult> ListByCategory(int categoryId)
+        {
+            // Fetch the projects that belong to the selected project type (category)
+            var projects = await _context.projects
+                .Include(p => p.ProjectType)
+                .Where(p => p.ProjectTypeId == categoryId)
+                .ToListAsync();
+
+            if (projects == null || !projects.Any())
+            {
+                return NotFound();
+            }
+
+            return View(projects);
+        }
+
         // GET: Projects/Create
         public IActionResult Create()
         {
@@ -67,6 +83,7 @@ namespace Thuthuka_Construction.Controllers
             {
                 _context.Add(project);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Project Added Successfully";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", project.CustomerId);
@@ -112,6 +129,7 @@ namespace Thuthuka_Construction.Controllers
                 {
                     _context.Update(project);
                     await _context.SaveChangesAsync();
+                    TempData["success"] = "Project Updated Successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -165,6 +183,7 @@ namespace Thuthuka_Construction.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["success"] = "Project Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 

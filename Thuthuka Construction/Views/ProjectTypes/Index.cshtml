@@ -1,35 +1,49 @@
 ﻿@model IEnumerable<Thuthuka_Construction.Models.ProjectType>
 
-@{
-    ViewData["Title"] = "Index";
-}
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Project Types</h2>
+            </div>
+        </div>
+    </div>
 
-<h1>Index</h1>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+                <!-- You can add filters, search, or additional controls here if necessary -->
+            </div>
+            <div class="col-6 text-end">
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Create New Project Type
+                </a>
+            </div>
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectTypeName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectTypeName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProjectTypeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProjectTypeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProjectTypeId">Delete</a>
-            </td>
-        </tr>
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Project Type Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ProjectTypeName)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ProjectTypeId" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.ProjectTypeId" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/projectType.js"></script>
 }
-    </tbody>
-</table>

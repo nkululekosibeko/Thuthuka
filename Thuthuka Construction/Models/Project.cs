@@ -15,11 +15,13 @@ namespace Thuthuka_Construction.Models
         public int ProjectTypeId { get; set; }
         [ForeignKey("ProjectTypeId")]
         [ValidateNever]
-        public ProjectType ProjectType { get; set; }  
+        public ProjectType ProjectType { get; set; }
+        [Display(Name ="Customer Id")]
         public string CustomerId { get; set; }
         [ForeignKey("CustomerId")]
         [ValidateNever]
         public ApplicationUser Customer { get; set; }
+        [Display(Name = "Foreman Id")]
         public string ForemanId { get; set; }
         [ForeignKey("ForemanId")]
         [ValidateNever]
