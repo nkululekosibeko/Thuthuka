@@ -60,6 +60,7 @@ namespace Thuthuka_Construction.Controllers
             {
                 _context.Add(projectType);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Project Type Added Successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(projectType);
@@ -99,6 +100,7 @@ namespace Thuthuka_Construction.Controllers
                 {
                     _context.Update(projectType);
                     await _context.SaveChangesAsync();
+                    TempData["success"] = "Project Type Updated Successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -146,6 +148,7 @@ namespace Thuthuka_Construction.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["success"] = "Project Type Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 

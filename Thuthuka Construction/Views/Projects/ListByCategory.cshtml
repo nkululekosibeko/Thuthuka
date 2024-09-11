@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Thuthuka_Construction.Models.Project>
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Projects in @Model.FirstOrDefault()?.ProjectType.ProjectTypeName</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var project in Model)
+                    {
+                        <tr>
+                            <td>@project.ProjectName</td>
+                            <td>@project.StartDate.ToString("MM/dd/yyyy")</td>
+                            <td>@project.EndDate.ToString("MM/dd/yyyy")</td>
+                            <td>@project.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No projects found for this category.</p>
+        }
+    </div>
+</div>
+S
