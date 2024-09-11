@@ -1,9 +1,12 @@
-﻿namespace Thuthuka_Construction.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Thuthuka_Construction.Models
 {
     public class ProjectType
     {
-        public int projectTypeId { get; set; }
-        public string projectName { get; set; }
+        [Key]
+        public int ProjectTypeId { get; set; }
+        public string ProjectTypeName { get; set; }
 
     }
 }

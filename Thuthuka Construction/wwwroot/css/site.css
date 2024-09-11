@@ -1,6 +1,9 @@
 html {
   font-size: 14px;
 }
+.navbar {
+    height: 70px;
+}
 
 @media (min-width: 768px) {
   html {

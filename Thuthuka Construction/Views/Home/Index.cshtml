@@ -1,8 +1,140 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<head>
+    <link href="css/HomeStyles.css" rel="stylesheet">
+</head>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4">Building Your Dream with Quality and Expertise</h1>
+            <p class="lead">Thuthuka Constructions - Turning your vision into reality.Explore our diverse range of construction projects designed to meet the unique needs of various clients, from residential homes to large-scale commercial spaces.</p>
+            <a href="#project-types" class="btn btn-primary">Explore Project Types</a>
+        </div>
+    </section>
+
+    <!-- Project Types Section -->
+    <section id="project-types" class="project-types-section py-5 bg-light">
+        <div class="container text-center">
+            <h2>Our Project Categories</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card project-type-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Residential</h5>
+                            <p class="card-text">We offer personalized residential projects, from single-family homes to apartment complexes.</p>
+                            <a href="/Projects/ListByCategory?categoryId=1" class="btn btn-outline-primary">View Residential Projects</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card project-type-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Commercial</h5>
+                            <p class="card-text">Explore our commercial projects, including office buildings, retail spaces, and more.</p>
+                            <a href="/Projects/ListByCategory?categoryId=2" class="btn btn-outline-primary">View Commercial Projects</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card project-type-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Industrial</h5>
+                            <p class="card-text">We specialize in industrial construction, including warehouses and manufacturing facilities.</p>
+                            <a href="/Projects/ListByCategory?categoryId=3" class="btn btn-outline-primary">View Industrial Projects</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project List Section (After selecting a category) -->
+    <section class="projects-section py-5">
+        <div class="container">
+            <h2 class="text-center">Projects Under Selected Category</h2>
+            <div class="row">
+                <!-- Example projects, should be dynamically generated -->
+                <div class="col-md-4 mb-3">
+                    <div class="card project-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Luxury Residential Home</h5>
+                            <p class="card-text">A spacious luxury home tailored to your needs.</p>
+                            <a href="/Projects/Details?projectId=1" class="btn btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card project-card">
+                        <div class="card-body">
+                            <h5 class="card-title">City Center Apartments</h5>
+                            <p class="card-text">Affordable apartments located in the heart of the city.</p>
+                            <a href="/Projects/Details?projectId=2" class="btn btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card project-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Retail Complex</h5>
+                            <p class="card-text">A modern retail space in a high-traffic area.</p>
+                            <a href="/Projects/Details?projectId=3" class="btn btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap-section py-5 bg-light">
+        <div class="container text-center">
+            <h3>Our Journey</h3>
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card roadmap-card">
+                        <div class="card-body">
+                            <h5 class="card-title">1997</h5>
+                            <p class="card-text">Company Established</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card roadmap-card">
+                        <div class="card-body">
+                            <h5 class="card-title">2000</h5>
+                            <p class="card-text">First Major Project</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card roadmap-card">
+                        <div class="card-body">
+                            <h5 class="card-title">2010</h5>
+                            <p class="card-text">Expanded Commercial Offerings</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card roadmap-card">
+                        <div class="card-body">
+                            <h5 class="card-title">2023</h5>
+                            <p class="card-text">Celebrating 25 Years of Excellence</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section py-4">
+        <div class="container text-center">
+            <p>Building better and safer communities since 1997.</p>
+            <p>47 Malinson Rd., Sydneham, Durban, ST 12345</p>
+            <p>info@thuthukaconstructions.com</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+</body>

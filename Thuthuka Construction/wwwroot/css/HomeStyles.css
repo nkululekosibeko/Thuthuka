@@ -1,0 +1,100 @@
+﻿/* Body */
+body {
+    padding-top: 60px;
+}
+
+/* Navbar */
+.navbar {
+    height: 70px;
+}
+
+/* Hero Section */
+.hero-section {
+    background: url('../images/19.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 100px 0;
+    color: #fff;
+}
+
+    .hero-section h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .hero-section p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.25rem;
+        margin-bottom: 40px;
+    }
+
+    .hero-section .btn {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        padding: 10px 30px;
+        font-size: 1.2rem;
+    }
+
+/* Project Types Section */
+.project-types-section {
+    padding: 60px 0;
+}
+
+.project-type-card {
+    border: none;
+    background-color: #f8f9fa;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .project-type-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+/* Projects Section */
+.projects-section {
+    background-color: #f0f0f0;
+}
+
+.project-card {
+    border: none;
+    background-color: #f8f9fa;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+/* Roadmap Section */
+.roadmap-section {
+    padding: 60px 0;
+    background-color: #f0f0f0;
+}
+
+.roadmap-card {
+    border: none;
+    background-color: #f8f9fa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .roadmap-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+/* Footer */
+.footer-section {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px 0;
+}
+
+    .footer-section p {
+        font-size: 1rem;
+        margin: 0;
+    }

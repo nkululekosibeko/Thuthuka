@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Thuthuka_Construction.Models.Quatation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateIssued)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foreman)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateIssued)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Foreman.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.QuatationId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.QuatationId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.QuatationId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
