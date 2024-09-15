@@ -37,9 +37,6 @@ body {
     border-radius: 15px;
 }
 
-
-
-
     .hero-section h1 {
         font-family: 'Montserrat', sans-serif;
         font-size: 3.5rem;
@@ -51,6 +48,7 @@ body {
         font-family: 'Roboto', sans-serif;
         font-size: 1.25rem;
         margin-bottom: 40px;
+        color: #fff;
     }
 
     .hero-section .btn {
@@ -60,79 +58,392 @@ body {
         font-size: 1.2rem;
     }
 
+
 /* Project Types Section */
 .project-types-section {
-    background-color: lightgray;
+    background-color: #f8f9fa; /* Use a light, neutral background */
     padding: 60px 0;
     margin-bottom: 10px;
-    height: 500px;
     border-radius: 15px;
 }
 
+/* Project Type Card Styling */
 .project-type-card {
     border: none;
-    background-color: #f8f9fa;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff; /* White background for the cards */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden;
+    height: 100%; /* Ensure cards fill the height */
 }
 
+    /* Hover effect for cards */
     .project-type-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-10px); /* Lift card on hover */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        background-color: #f0f8ff; /* Subtle background color change on hover */
     }
+
+    /* Title Styling */
+    .project-type-card .card-title {
+        font-size: 1.5rem;
+        color: #007bff;
+        margin-bottom: 15px;
+    }
+
+    /* Text Styling */
+    .project-type-card .card-text {
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    /* Button Styling */
+    .project-type-card .btn-outline-primary {
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease; /* Smooth button hover */
+    }
+
+        /* Button Hover Effect */
+        .project-type-card .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+/* Row Spacing */
+.project-types-section .row {
+    margin-top: 30px; /* Adds space above the row */
+}
+
+/* Ensure all cards have equal height */
+.project-type-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .project-type-card {
+        margin-bottom: 20px; /* Spacing between cards on mobile */
+    }
+}
+
+
+
+/* The Gap-section*/
+.gap-section {
+    background: url('../images/5.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 100px 0;
+    color: cornflowerblue;
+    text-align: center;
+    margin-bottom: 10px;
+    height: 500px;
+    width: auto;
+    border-radius: 10px;
+}
+
+    .gap-section h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3.5rem;
+        color: aliceblue;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-color: rgba(0, 0, 0, 0.3); /* 30% opacity black */
+        backdrop-filter: blur(2.5px); /* Blurs the background behind the element */
+        border-radius: 10px;
+        padding: 10px;
+        display: inline-block;
+    }
+
+    .gap-section p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.25rem;
+        color:aliceblue;
+        margin-bottom: 40px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: rgba(0, 0, 0, 0.3); /* 30% opacity black */
+        backdrop-filter: blur(2.5px); /* Blurs the background behind the element */
+        border-radius: 10px;
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+
+/* Project Stats */
+.project-stats h3 {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+.stat-card {
+    background-color: #f8f9fa; /* Light background for the cards */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Transition effects */
+    margin: 15px; /* Space between the cards */
+}
+
+    .stat-card:hover {
+        transform: translateY(-10px); /* Lift the card on hover */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        background-color: #007bff; /* Change background color on hover */
+        color: #fff; /* Change text color on hover */
+    }
+
+        .stat-card:hover h3, .stat-card:hover p {
+            color: #fff; /* Ensure the text is white on hover */
+        }
+
+    .stat-card:nth-child(2):hover {
+        background-color: #28a745; /* Green for the second card */
+    }
+
+    .stat-card:nth-child(3):hover {
+        background-color: #17a2b8; /* Blue-green for the third card */
+    }
+
+    .stat-card:nth-child(4):hover {
+        background-color: #ffc107; /* Yellow for the fourth card */
+    }
+
+    .stat-card:nth-child(5):hover {
+        background-color: #dc3545; /* Red for the fifth card */
+    }
+
+.project-stats .row {
+    justify-content: center; /* Centers the cards horizontally */
+}
+
+@media (max-width: 768px) {
+    .stat-card {
+        margin-bottom: 20px; /* Add spacing between cards on mobile */
+    }
+}
+
+
+
 
 /* Projects Section */
 .projects-section {
-    background-color: lightgray;
+    background-color: #f8f9fa; /* Light gray background for the section */
+    padding: 60px 0; /* Add vertical padding */
+    border-radius: 15px; /* Round the edges of the section */
+    margin-bottom: 10px;
+}
+
+/* Project Card Styling */
+.project-card {
+    border: none; /* Remove border */
+    background-color: #fff; /* White background for the cards */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden;
+    height: 100%; /* Ensure cards fill the height */
+}
+
+    /* Hover effect for project cards */
+    .project-card:hover {
+        transform: translateY(-10px); /* Lift card on hover */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        background-color: #e0f7fa; /* Subtle background color change on hover */
+    }
+
+    /* Title Styling */
+    .project-card .card-title {
+        font-size: 1.5rem;
+        color: #007bff;
+        margin-bottom: 15px;
+    }
+
+    /* Text Styling */
+    .project-card .card-text {
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    /* Button Styling */
+    .project-card .btn-outline-primary {
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease; /* Smooth button hover */
+    }
+
+        /* Button Hover Effect */
+        .project-card .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+/* Row Spacing */
+.projects-section .row {
+    margin-top: 30px; /* Adds space above the row */
+}
+
+/* Ensure all cards have equal height */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .project-card {
+        margin-bottom: 20px; /* Spacing between cards on mobile */
+    }
+}
+
+
+
+
+/* Additional Section */
+.additional-section {
+    background: url('../images/12.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 100px 0;
+    color: #fff;
+    overflow: hidden;
     margin-bottom: 10px;
     height: 500px;
     border-radius: 15px;
 }
 
-.project-card {
-    border: 25px;
-    background-color: #f8f9fa;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-    .project-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        background-color: #e0e0e0;
+    .additional-section h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
     }
+
+    .additional-section p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.25rem;
+        margin-bottom: 40px;
+    }
+
+    .additional-section .btn {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        padding: 10px 30px;
+        font-size: 1.2rem;
+    }
+
 
 /* Roadmap Section */
 .roadmap-section {
-    padding: 60px 0;
-    background-color: lightgray;
+    background-color: #f8f9fa; /* Light background for the section */
+    padding: 60px 0; /* Add vertical padding */
+    border-radius: 15px; /* Rounded corners */
     margin-bottom: 10px;
-    height: 350px;
-    border-radius: 15px;
 }
 
+/* Roadmap Card Styling */
 .roadmap-card {
-    border: none;
-    background-color: #f8f9fa;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none; /* Remove border */
+    background-color: #fff; /* White background for the cards */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden;
+    height: 100%; /* Ensure cards fill the height */
 }
 
+    /* Hover effect for roadmap cards */
     .roadmap-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-10px); /* Lift card on hover */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        background-color: #e0f7fa; /* Subtle background color change on hover */
     }
 
-/* Footer */
-.footer-section {
-    background-color: #343a40;
-    color: #fff;
-    padding: 20px 0;
-    margin-bottom: 10px;
-    height: 150px;
-    border-radius: 15px;
+    /* Title Styling */
+    .roadmap-card .card-title {
+        font-size: 1.5rem;
+        color: #007bff;
+        margin-bottom: 15px;
+    }
+
+    /* Text Styling */
+    .roadmap-card .card-text {
+        color: #6c757d;
+    }
+
+/* Row Spacing */
+.roadmap-section .row {
+    justify-content: center; /* Centers the cards horizontally */
+    margin-top: 30px; /* Adds space above the row */
 }
 
-    .footer-section p {
-        font-size: 1rem;
-        margin: 0;
+/* Ensure all cards have equal height */
+.roadmap-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    height: 100%;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .roadmap-card {
+        margin-bottom: 20px; /* Spacing between cards on mobile */
     }
+}
+
+
+
+/* Combined Section */
+.combined-section {
+    background: url('../images/22.jpg') no-repeat center center;
+    background-size: cover; /* Ensure background covers the section */
+    padding: 60px 0; /* Add vertical padding */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 10px;
+    color: #fff; /* Text color for better contrast */
+}
+
+/* Company Logo */
+.company-logo {
+    max-width: 150px; /* Adjust logo size */
+    height: auto;
+    border-radius: 15px; /* Rounded corners for logo */
+    display: block; /* Ensure it's centered properly */
+    margin: 0 auto 20px; /* Center horizontally and add space below */
+}
+
+/* Text Styling */
+.combined-section h3 {
+    font-size: 1.75rem;
+    color: #fff; /* Ensure text is visible against background */
+    margin-bottom: 20px;
+}
+
+.combined-section p {
+    color: #dcdcdc; /* Light gray text for contrast */
+    margin: 5px 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .combined-section .row {
+        text-align: center;
+    }
+
+    .company-logo {
+        margin-bottom: 20px;
+    }
+}
+
+
