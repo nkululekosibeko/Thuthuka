@@ -65,6 +65,7 @@ namespace Thuthuka_Construction.Controllers
             {
                 _context.Add(quatation);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Quatation Created Successfully";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", quatation.ForemanId);
@@ -108,6 +109,8 @@ namespace Thuthuka_Construction.Controllers
                 {
                     _context.Update(quatation);
                     await _context.SaveChangesAsync();
+                    TempData["success"] = "Quatation Detailsn Updated Successfully";
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,6 +162,7 @@ namespace Thuthuka_Construction.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["success"] = "Quatation Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 

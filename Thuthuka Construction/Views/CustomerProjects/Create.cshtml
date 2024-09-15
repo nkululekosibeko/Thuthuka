@@ -1,46 +1,59 @@
 ﻿@model Thuthuka_Construction.Models.CustomerProject
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Delete";
 }
 
-<h1>Create</h1>
-
-<h4>CustomerProject</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-danger bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Delete Customer Project</h2>
             </div>
-            <div class="form-group">
-                <label asp-for="QuatationId" class="control-label"></label>
-                <select asp-for="QuatationId" class ="form-control" asp-items="ViewBag.QuatationId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SelectDate" class="control-label"></label>
-                <input asp-for="SelectDate" class="form-control" />
-                <span asp-validation-for="SelectDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <h3>Are you sure you want to delete this?</h3>
+        <div>
+            <h4>Customer Project</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Customer)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Customer.Id)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Quatation)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Quatation.QuatationId)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.SelectDate)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.SelectDate)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
+            </dl>
+        </div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="CustomerProjectId" />
+            <div class="row pt-3">
+                <div class="col-6 col-md-3">
+                    <input type="submit" value="Delete" class="btn btn-danger form-control" />
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+                </div>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

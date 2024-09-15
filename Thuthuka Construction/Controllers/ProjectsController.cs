@@ -65,6 +65,7 @@ namespace Thuthuka_Construction.Controllers
             {
                 _context.Add(project);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Projects Created Successfully";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", project.ForemanId);
@@ -108,6 +109,8 @@ namespace Thuthuka_Construction.Controllers
                 {
                     _context.Update(project);
                     await _context.SaveChangesAsync();
+                    TempData["success"] = "Projects Details Updated Successfully";
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,6 +162,7 @@ namespace Thuthuka_Construction.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["success"] = "Projects Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 
