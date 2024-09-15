@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Thuthuka_Construction.Models.Progress>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.customerProject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentPhase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.customerProject.CustomerProjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentPhase)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProgressId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProgressId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProgressId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

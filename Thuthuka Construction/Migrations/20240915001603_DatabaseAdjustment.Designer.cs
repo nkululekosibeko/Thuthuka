@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Thuthuka_Construction.DB;
 
@@ -11,9 +12,11 @@ using Thuthuka_Construction.DB;
 namespace Thuthuka_Construction.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240915001603_DatabaseAdjustment")]
+    partial class DatabaseAdjustment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,30 +262,6 @@ namespace Thuthuka_Construction.Migrations
                     b.ToTable("customerProjects");
                 });
 
-            modelBuilder.Entity("Thuthuka_Construction.Models.Progress", b =>
-                {
-                    b.Property<int>("ProgressId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgressId"));
-
-                    b.Property<int>("CurrentPhase")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CustomerProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ProgressId");
-
-                    b.HasIndex("CustomerProjectId");
-
-                    b.ToTable("progresses");
-                });
-
             modelBuilder.Entity("Thuthuka_Construction.Models.Project", b =>
                 {
                     b.Property<int>("ProjectId")
@@ -475,17 +454,6 @@ namespace Thuthuka_Construction.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Quatation");
-                });
-
-            modelBuilder.Entity("Thuthuka_Construction.Models.Progress", b =>
-                {
-                    b.HasOne("Thuthuka_Construction.Models.CustomerProject", "customerProject")
-                        .WithMany()
-                        .HasForeignKey("CustomerProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("customerProject");
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.Project", b =>

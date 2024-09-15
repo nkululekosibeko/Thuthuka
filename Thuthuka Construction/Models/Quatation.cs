@@ -8,17 +8,20 @@ namespace Thuthuka_Construction.Models
     {
         [Key]
         public int QuatationId { get; set; }
-        public double TotalCost { get; set; }
-        public DateOnly DateIssued { get; set; }
-        public int ProjectId { get; set; }
-        [ForeignKey("ProjectId")]
-        [ValidateNever]
-        public Project Project { get; set; }
 
+        public int CustomerProjectId { get; set; }
+        [ForeignKey("CustomerProjectId")]
+        [ValidateNever]
+        public CustomerProject customerProject { get; set; }
         public string ForemanId { get; set; }
         [ForeignKey("ForemanId")]
         [ValidateNever]
         public ApplicationUser Foreman { get; set; }
+        public Double TotalCost { get; set; }
+        public string Resources { get; set; }
+        public DateTime DateCreated { get; set; }
+
+        public string Status { get; set; } = "Sent";
 
         //Add foreign keys
     }

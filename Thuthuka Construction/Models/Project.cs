@@ -9,24 +9,20 @@ namespace Thuthuka_Construction.Models
         [Key]
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public string Description { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string Status { get; set; } = " available";
 
         public int ProjectTypeId { get; set; }
         [ForeignKey("ProjectTypeId")]
         [ValidateNever]
         public ProjectType ProjectType { get; set; }
-        [Display(Name ="Customer Id")]
-        public string CustomerId { get; set; }
-        [ForeignKey("CustomerId")]
-        [ValidateNever]
-        public ApplicationUser Customer { get; set; }
+
         [Display(Name = "Foreman Id")]
         public string ForemanId { get; set; }
         [ForeignKey("ForemanId")]
         [ValidateNever]
         public ApplicationUser Foreman { get; set; }
-
-        public string Status { get; set; } = "Pending";
     }
 }

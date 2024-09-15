@@ -15,7 +15,8 @@ namespace Thuthuka_Construction.DB
         public DbSet<ProjectType> projectTypes { get; set; }
         public DbSet<Project> projects { get; set; }
         public DbSet<Quatation> quatations { get; set; }
-        public DbSet<CustomerRequirements> customerRequirements { get; set; }
+        public DbSet<CustomerProject> customerProjects { get; set; }
         public DbSet<ApplicationUser> applicationUsers { get; set; }
+        public DbSet<Progress> progresses { get; set; }
     }
 }

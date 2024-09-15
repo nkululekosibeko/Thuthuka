@@ -22,7 +22,7 @@ namespace Thuthuka_Construction.Controllers
         // GET: Quatations
         public async Task<IActionResult> Index()
         {
-            var applicationDBContext = _context.quatations.Include(q => q.Foreman).Include(q => q.Project);
+            var applicationDBContext = _context.quatations.Include(q => q.Foreman).Include(q => q.customerProject);
             return View(await applicationDBContext.ToListAsync());
         }
 
@@ -36,7 +36,7 @@ namespace Thuthuka_Construction.Controllers
 
             var quatation = await _context.quatations
                 .Include(q => q.Foreman)
-                .Include(q => q.Project)
+                .Include(q => q.customerProject)
                 .FirstOrDefaultAsync(m => m.QuatationId == id);
             if (quatation == null)
             {
@@ -50,7 +50,7 @@ namespace Thuthuka_Construction.Controllers
         public IActionResult Create()
         {
             ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id");
-            ViewData["ProjectId"] = new SelectList(_context.projects, "ProjectId", "ProjectId");
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace Thuthuka_Construction.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuatationId,TotalCost,DateIssued,ProjectId,ForemanId")] Quatation quatation)
+        public async Task<IActionResult> Create([Bind("QuatationId,CustomerProjectId,ForemanId,TotalCost,Resources,DateCreated,Status")] Quatation quatation)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace Thuthuka_Construction.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", quatation.ForemanId);
-            ViewData["ProjectId"] = new SelectList(_context.projects, "ProjectId", "ProjectId", quatation.ProjectId);
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", quatation.CustomerProjectId);
             return View(quatation);
         }
 
@@ -86,7 +86,7 @@ namespace Thuthuka_Construction.Controllers
                 return NotFound();
             }
             ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", quatation.ForemanId);
-            ViewData["ProjectId"] = new SelectList(_context.projects, "ProjectId", "ProjectId", quatation.ProjectId);
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", quatation.CustomerProjectId);
             return View(quatation);
         }
 
@@ -95,7 +95,7 @@ namespace Thuthuka_Construction.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("QuatationId,TotalCost,DateIssued,ProjectId,ForemanId")] Quatation quatation)
+        public async Task<IActionResult> Edit(int id, [Bind("QuatationId,CustomerProjectId,ForemanId,TotalCost,Resources,DateCreated,Status")] Quatation quatation)
         {
             if (id != quatation.QuatationId)
             {
@@ -123,7 +123,7 @@ namespace Thuthuka_Construction.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", quatation.ForemanId);
-            ViewData["ProjectId"] = new SelectList(_context.projects, "ProjectId", "ProjectId", quatation.ProjectId);
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", quatation.CustomerProjectId);
             return View(quatation);
         }
 
@@ -137,7 +137,7 @@ namespace Thuthuka_Construction.Controllers
 
             var quatation = await _context.quatations
                 .Include(q => q.Foreman)
-                .Include(q => q.Project)
+                .Include(q => q.customerProject)
                 .FirstOrDefaultAsync(m => m.QuatationId == id);
             if (quatation == null)
             {

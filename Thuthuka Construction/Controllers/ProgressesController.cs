@@ -10,23 +10,23 @@ using Thuthuka_Construction.Models;
 
 namespace Thuthuka_Construction.Controllers
 {
-    public class ProjectsController : Controller
+    public class ProgressesController : Controller
     {
         private readonly ApplicationDBContext _context;
 
-        public ProjectsController(ApplicationDBContext context)
+        public ProgressesController(ApplicationDBContext context)
         {
             _context = context;
         }
 
-        // GET: Projects
+        // GET: Progresses
         public async Task<IActionResult> Index()
         {
-            var applicationDBContext = _context.projects.Include(p => p.Foreman).Include(p => p.ProjectType);
+            var applicationDBContext = _context.progresses.Include(p => p.customerProject);
             return View(await applicationDBContext.ToListAsync());
         }
 
-        // GET: Projects/Details/5
+        // GET: Progresses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,45 +34,42 @@ namespace Thuthuka_Construction.Controllers
                 return NotFound();
             }
 
-            var project = await _context.projects
-                .Include(p => p.Foreman)
-                .Include(p => p.ProjectType)
-                .FirstOrDefaultAsync(m => m.ProjectId == id);
-            if (project == null)
+            var progress = await _context.progresses
+                .Include(p => p.customerProject)
+                .FirstOrDefaultAsync(m => m.ProgressId == id);
+            if (progress == null)
             {
                 return NotFound();
             }
 
-            return View(project);
+            return View(progress);
         }
 
-        // GET: Projects/Create
+        // GET: Progresses/Create
         public IActionResult Create()
         {
-            ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id");
-            ViewData["ProjectTypeId"] = new SelectList(_context.projectTypes, "ProjectTypeId", "ProjectTypeId");
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId");
             return View();
         }
 
-        // POST: Projects/Create
+        // POST: Progresses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName,Description,StartDate,EndDate,Status,ProjectTypeId,ForemanId")] Project project)
+        public async Task<IActionResult> Create([Bind("ProgressId,CustomerProjectId,CurrentPhase,UpdateDate")] Progress progress)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(project);
+                _context.Add(progress);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", project.ForemanId);
-            ViewData["ProjectTypeId"] = new SelectList(_context.projectTypes, "ProjectTypeId", "ProjectTypeId", project.ProjectTypeId);
-            return View(project);
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", progress.CustomerProjectId);
+            return View(progress);
         }
 
-        // GET: Projects/Edit/5
+        // GET: Progresses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,24 +77,23 @@ namespace Thuthuka_Construction.Controllers
                 return NotFound();
             }
 
-            var project = await _context.projects.FindAsync(id);
-            if (project == null)
+            var progress = await _context.progresses.FindAsync(id);
+            if (progress == null)
             {
                 return NotFound();
             }
-            ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", project.ForemanId);
-            ViewData["ProjectTypeId"] = new SelectList(_context.projectTypes, "ProjectTypeId", "ProjectTypeId", project.ProjectTypeId);
-            return View(project);
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", progress.CustomerProjectId);
+            return View(progress);
         }
 
-        // POST: Projects/Edit/5
+        // POST: Progresses/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProjectId,ProjectName,Description,StartDate,EndDate,Status,ProjectTypeId,ForemanId")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("ProgressId,CustomerProjectId,CurrentPhase,UpdateDate")] Progress progress)
         {
-            if (id != project.ProjectId)
+            if (id != progress.ProgressId)
             {
                 return NotFound();
             }
@@ -106,12 +102,12 @@ namespace Thuthuka_Construction.Controllers
             {
                 try
                 {
-                    _context.Update(project);
+                    _context.Update(progress);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectExists(project.ProjectId))
+                    if (!ProgressExists(progress.ProgressId))
                     {
                         return NotFound();
                     }
@@ -122,12 +118,11 @@ namespace Thuthuka_Construction.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", project.ForemanId);
-            ViewData["ProjectTypeId"] = new SelectList(_context.projectTypes, "ProjectTypeId", "ProjectTypeId", project.ProjectTypeId);
-            return View(project);
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", progress.CustomerProjectId);
+            return View(progress);
         }
 
-        // GET: Projects/Delete/5
+        // GET: Progresses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,36 +130,35 @@ namespace Thuthuka_Construction.Controllers
                 return NotFound();
             }
 
-            var project = await _context.projects
-                .Include(p => p.Foreman)
-                .Include(p => p.ProjectType)
-                .FirstOrDefaultAsync(m => m.ProjectId == id);
-            if (project == null)
+            var progress = await _context.progresses
+                .Include(p => p.customerProject)
+                .FirstOrDefaultAsync(m => m.ProgressId == id);
+            if (progress == null)
             {
                 return NotFound();
             }
 
-            return View(project);
+            return View(progress);
         }
 
-        // POST: Projects/Delete/5
+        // POST: Progresses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var project = await _context.projects.FindAsync(id);
-            if (project != null)
+            var progress = await _context.progresses.FindAsync(id);
+            if (progress != null)
             {
-                _context.projects.Remove(project);
+                _context.progresses.Remove(progress);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProjectExists(int id)
+        private bool ProgressExists(int id)
         {
-            return _context.projects.Any(e => e.ProjectId == id);
+            return _context.progresses.Any(e => e.ProgressId == id);
         }
     }
 }
