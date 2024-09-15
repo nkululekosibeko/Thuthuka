@@ -18,13 +18,14 @@ namespace Thuthuka_Construction.Models
         public ApplicationUser Customer { get; set; }
 
 
-        [Display(Name = "Quatation Id")]
-        public int QuatationId { get; set; }
-        [ForeignKey("QuatationId")]
+        [Display(Name = "Project Id")]
+        public int ProjectId { get; set; }
+        [ForeignKey("ProjectId")]
         [ValidateNever]
-        public Quatation Quatation { get; set; }
+        public Project Project { get; set; }
 
-        public DateTime SelectDate { get; set; }
+        public DateOnly SelectDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
 
         public Status Status { get; set; }
     }

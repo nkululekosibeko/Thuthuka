@@ -85,13 +85,23 @@
                 </div>
             </dd>
         </dl>
-
+        @if (User.IsInRole(SD.Role_Admin))
+        {
+            <div class="row pt-4">
+                <div class="col-6 col-md-3">
+                    <a asp-action="Edit" asp-route-id="@Model?.ProjectId" class="btn btn-primary form-control">Edit</a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+                </div>
+            </div>
+        }
         <div class="row pt-4">
             <div class="col-6 col-md-3">
-                <a asp-action="Edit" asp-route-id="@Model?.ProjectId" class="btn btn-primary form-control">Edit</a>
+                <a  class="btn btn-primary form-control" asp-area="" asp-controller="Projects" asp-action="" asp-route-id="">Build Yours</a>
             </div>
             <div class="col-6 col-md-3">
-                <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+                <a asp-controller="Projects" asp-action="ListByCategory" asp-route-categoryId="4" class="btn btn-outline-primary border form-control">Back to Projects</a>
             </div>
         </div>
     </div>

@@ -13,9 +13,10 @@ namespace Thuthuka_Construction.Models
         [ForeignKey("CustomerProjectId")]
         [ValidateNever]
         public CustomerProject customerProject { get; set; }
-        public CurrentPhase CurrentPhase { get; set; } 
+        public CurrentPhase CurrentPhase { get; set; }
 
-        public DateTime UpdateDate { get; set; }  
+        public DateOnly SelectDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
     }
 
     public enum CurrentPhase

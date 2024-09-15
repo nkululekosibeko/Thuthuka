@@ -19,7 +19,7 @@ namespace Thuthuka_Construction.Models
         public ApplicationUser Foreman { get; set; }
         public Double TotalCost { get; set; }
         public string Resources { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateOnly SelectDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         public string Status { get; set; } = "Sent";
 
