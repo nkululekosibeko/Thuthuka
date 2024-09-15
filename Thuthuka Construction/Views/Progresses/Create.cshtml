@@ -4,17 +4,18 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Progress</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-primary bg-gradient text-white py-3">
+        <h2 class="text-center">Create New Progress Entry</h2>
+    </div>
+    <div class="card-body p-4">
+        <h4>Progress</h4>
+        <hr />
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CustomerProjectId" class="control-label"></label>
-                <select asp-for="CustomerProjectId" class ="form-control" asp-items="ViewBag.CustomerProjectId"></select>
+                <select asp-for="CustomerProjectId" class="form-control" asp-items="ViewBag.CustomerProjectId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="CurrentPhase" class="control-label"></label>
@@ -31,12 +32,13 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="card-footer text-center">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
