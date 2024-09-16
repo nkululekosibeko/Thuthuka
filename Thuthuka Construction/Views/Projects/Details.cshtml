@@ -86,14 +86,29 @@
             </dd>
         </dl>
 
-        <div class="row pt-4">
-            <div class="col-6 col-md-3">
-                <a asp-action="Edit" asp-route-id="@Model?.ProjectId" class="btn btn-primary form-control">Edit</a>
+        @if (User.IsInRole(SD.Role_Admin))
+        {
+            <div class="row pt-4">
+                <div class="col-6 col-md-3">
+                    <a asp-action="Edit" asp-route-id="@Model?.ProjectId" class="btn btn-primary form-control">Edit</a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+                </div>
             </div>
-            <div class="col-6 col-md-3">
-                <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+        }
+        else
+        {
+            <div class="row pt-4">
+                <div class="col-6 col-md-3">
+                    <a class="btn btn-primary form-control" asp-controller="Projects" asp-action="BuildCustomerProject" asp-route-projectId="@Model.ProjectId">Build Yours</a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-controller="Projects" asp-action="ListByCategory" asp-route-categoryId="4" class="btn btn-outline-primary border form-control">Back to Projects</a>
+                </div>
             </div>
-        </div>
+        }
+
     </div>
 </div>
 @section Scripts {

@@ -1,54 +1,57 @@
 ﻿@model Thuthuka_Construction.Models.CustomerProject
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Customer Project Details";
 }
 
 <div class="card shadow border-0 my-4">
-    <div class="card-header bg-success bg-gradient ml-0 py-3">
+    <div class="card-header bg-info bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="text-white py-2">Customer Project Details</h2>
             </div>
         </div>
     </div>
+
     <div class="card-body p-4">
-        <div>
-            <h4>Customer Project</h4>
-            <hr />
+        <div class="border p-3">
             <dl class="row">
-                <dt class="col-sm-3">
+                <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Customer)
                 </dt>
-                <dd class="col-sm-9">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Customer.Id)
                 </dd>
-                <dt class="col-sm-3">
+
+                <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Quatation)
                 </dt>
-                <dd class="col-sm-9">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Quatation.QuatationId)
                 </dd>
-                <dt class="col-sm-3">
+
+                <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.SelectDate)
                 </dt>
-                <dd class="col-sm-9">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.SelectDate)
                 </dd>
-                <dt class="col-sm-3">
+
+                <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Status)
                 </dt>
-                <dd class="col-sm-9">
+                <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Status)
                 </dd>
             </dl>
-        </div>
-        <div class="row pt-3">
-            <div class="col-6 col-md-3">
-                <a asp-action="Edit" asp-route-id="@Model?.CustomerProjectId" class="btn btn-warning form-control">Edit</a>
-            </div>
-            <div class="col-6 col-md-3">
-                <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+
+            <div class="row pt-2">
+                <div class="col-6 col-md-3">
+                    <a asp-action="Edit" asp-route-id="@Model?.CustomerProjectId" class="btn btn-primary form-control">Edit</a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+                </div>
             </div>
         </div>
     </div>

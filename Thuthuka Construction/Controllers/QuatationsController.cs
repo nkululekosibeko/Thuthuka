@@ -49,7 +49,17 @@ namespace Thuthuka_Construction.Controllers
         // GET: Quatations/Create
         public IActionResult Create()
         {
-            ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id");
+            var foremanRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Foreman")?.Id;
+            var foremen = _context.UserRoles
+                                  .Where(ur => ur.RoleId == foremanRoleId)
+                                  .Select(ur => ur.UserId).ToList();
+
+            var foremanUsers = _context.applicationUsers
+                                       .Where(u => foremen.Contains(u.Id))
+                                       .Select(u => new { u.Id, u.UserName })
+                                       .ToList();
+
+            ViewData["ForemanId"] = new SelectList(foremanUsers, "Id", "UserName"); // Display UserName instead of ID
             ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId");
             return View();
         }
@@ -68,7 +78,18 @@ namespace Thuthuka_Construction.Controllers
                 TempData["success"] = "Quatation Created Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", quatation.ForemanId);
+            // Same filtering logic for the Foreman dropdown in case the form is reloaded
+            var foremanRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Foreman")?.Id;
+            var foremen = _context.UserRoles
+                                  .Where(ur => ur.RoleId == foremanRoleId)
+                                  .Select(ur => ur.UserId).ToList();
+
+            var foremanUsers = _context.applicationUsers
+                                       .Where(u => foremen.Contains(u.Id))
+                                       .Select(u => new { u.Id, u.UserName })
+                                       .ToList();
+
+            ViewData["ForemanId"] = new SelectList(foremanUsers, "Id", "UserName", quatation.ForemanId);
             ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", quatation.CustomerProjectId);
             return View(quatation);
         }

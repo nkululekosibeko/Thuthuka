@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Thuthuka_Construction.Models.Project>
+
+<div class="container my-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-secondary bg-gradient py-3">
+            <h2 class="text-white text-center">Projects in @Model.FirstOrDefault()?.ProjectType.ProjectTypeName</h2>
+        </div>
+
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="row">
+                    @foreach (var project in Model)
+                    {
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-0 shadow-sm">
+                                @* <img src="@project.ImageUrl" class="card-img-top" alt="@project.ProjectName" /> *@
+                                <div class="card-body">
+                                    <h5 class="card-title">@project.ProjectName</h5>
+                                    <p class="card-text">Start Date: @project.StartDate.ToString("MM/dd/yyyy")</p>
+                                    <p class="card-text">End Date: @project.EndDate.ToString("MM/dd/yyyy")</p>
+                                    <p class="card-text">Status: @project.Status</p>
+                                    <a class="btn btn-primary" asp-area="" asp-controller="Projects" asp-action="Details" asp-route-id="@project.ProjectId">View More Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

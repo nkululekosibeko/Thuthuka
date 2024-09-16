@@ -1,36 +1,33 @@
 ﻿@model IEnumerable<Thuthuka_Construction.Models.CustomerProject>
 
-@{
-    ViewData["Title"] = "Customer Projects";
-}
-
 <div class="card shadow border-0 my-4">
-    <div class="card-header bg-info bg-gradient ml-0 py-3">
+    <div class="card-header bg-primary bg-gradient py-3">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="text-white py-2">Customer Projects</h2>
             </div>
         </div>
     </div>
+
     <div class="card-body p-4">
         <div class="row pb-3">
             <div class="col-6">
-                <!-- Optional space for filters or search -->
+                <!-- You can add filters, search, or additional controls here if necessary -->
             </div>
             <div class="col-6 text-end">
                 <a asp-action="Create" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Create New
+                    <i class="bi bi-plus-circle"></i> Create New Customer Project
                 </a>
             </div>
         </div>
 
-        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+        <table class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Customer.Id)</th>
-                    <th>@Html.DisplayNameFor(model => model.Quatation.QuatationId)</th>
-                    <th>@Html.DisplayNameFor(model => model.SelectDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.Status)</th>
+                    <th>Customer</th>
+                    <th>Quotation</th>
+                    <th>Select Date</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -44,7 +41,6 @@
                         <td>@Html.DisplayFor(modelItem => item.Status)</td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-warning">Edit</a>
-                            <a asp-action="Details" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-info">Details</a>
                             <a asp-action="Delete" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
@@ -55,5 +51,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/customerproject.js"></script>
+    <script src="~/js/customerProject.js"></script>
 }

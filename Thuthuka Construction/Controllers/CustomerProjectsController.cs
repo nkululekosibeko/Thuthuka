@@ -49,7 +49,17 @@ namespace Thuthuka_Construction.Controllers
         // GET: CustomerProjects/Create
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id");
+            var customerRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Customer")?.Id;
+            var customer = _context.UserRoles
+                                  .Where(ur => ur.RoleId == customerRoleId)
+                                  .Select(ur => ur.UserId).ToList();
+
+            var CustomerUsers = _context.applicationUsers
+                                       .Where(u => customer.Contains(u.Id))
+                                       .Select(u => new { u.Id, u.UserName })
+                                       .ToList();
+
+            ViewData["CustomerId"] = new SelectList(CustomerUsers, "Id", "UserName"); // Display UserName instead of ID
             ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId");
             return View();
         }
@@ -65,10 +75,19 @@ namespace Thuthuka_Construction.Controllers
             {
                 _context.Add(customerProject);
                 await _context.SaveChangesAsync();
-                TempData["success"] = "Customer Project Created Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
+            var customerRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Customer")?.Id;
+            var customer = _context.UserRoles
+                                  .Where(ur => ur.RoleId == customerRoleId)
+                                  .Select(ur => ur.UserId).ToList();
+
+            var CustomerUsers = _context.applicationUsers
+                                       .Where(u => customer.Contains(u.Id))
+                                       .Select(u => new { u.Id, u.UserName })
+                                       .ToList();
+
+            ViewData["CustomerId"] = new SelectList(CustomerUsers, "Id", "UserName", customerProject.CustomerId); // Display UserName instead of ID
             ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId", customerProject.QuatationId);
             return View(customerProject);
         }
@@ -109,8 +128,6 @@ namespace Thuthuka_Construction.Controllers
                 {
                     _context.Update(customerProject);
                     await _context.SaveChangesAsync();
-                    TempData["success"] = "Customer Project Updated Successfully";
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -162,7 +179,6 @@ namespace Thuthuka_Construction.Controllers
             }
 
             await _context.SaveChangesAsync();
-            TempData["success"] = "Customer Project Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 

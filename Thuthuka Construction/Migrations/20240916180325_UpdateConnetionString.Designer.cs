@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Thuthuka_Construction.DB;
 
@@ -11,9 +12,11 @@ using Thuthuka_Construction.DB;
 namespace Thuthuka_Construction.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240916180325_UpdateConnetionString")]
+    partial class UpdateConnetionString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,12 +247,11 @@ namespace Thuthuka_Construction.Migrations
                     b.Property<int>("QuatationId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("SelectDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("SelectDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("CustomerProjectId");
 
@@ -268,15 +270,14 @@ namespace Thuthuka_Construction.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgressId"));
 
-                    b.Property<string>("CurrentPhase")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CurrentPhase")
+                        .HasColumnType("int");
 
                     b.Property<int>("CustomerProjectId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("UpdateDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ProgressId");
 
@@ -297,8 +298,8 @@ namespace Thuthuka_Construction.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("EndDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ForemanId")
                         .IsRequired()
@@ -311,8 +312,8 @@ namespace Thuthuka_Construction.Migrations
                     b.Property<int>("ProjectTypeId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -355,8 +356,8 @@ namespace Thuthuka_Construction.Migrations
                     b.Property<int>("CustomerProjectId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("DateCreated")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ForemanId")
                         .IsRequired()

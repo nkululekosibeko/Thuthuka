@@ -1,71 +1,71 @@
 ﻿@model Thuthuka_Construction.Models.CustomerProject
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Customer Project";
 }
 
 <div class="card shadow border-0 my-4">
-    <div class="card-header bg-info bg-gradient ml-0 py-3">
+    <div class="card-header bg-warning bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="text-white py-2">Edit Customer Project</h2>
             </div>
         </div>
     </div>
+
     <div class="card-body p-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CustomerProjectId" />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="border p-3">
-                        <div class="form-floating py-2 col-12">
-                            <select asp-for="CustomerId" class="form-select border-0 shadow" asp-items="ViewBag.CustomerId">
-                                <option disabled selected>--Select Customer--</option>
-                            </select>
-                            <label asp-for="CustomerId" class="ms-2">Customer</label>
-                            <span asp-validation-for="CustomerId" class="text-danger"></span>
-                        </div>
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="CustomerProjectId" />
 
-                        <div class="form-floating py-2 col-12">
-                            <select asp-for="QuatationId" class="form-select border-0 shadow" asp-items="ViewBag.QuatationId">
-                                <option disabled selected>--Select Quotation--</option>
-                            </select>
-                            <label asp-for="QuatationId" class="ms-2">Quotation</label>
-                            <span asp-validation-for="QuatationId" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="SelectDate" class="form-control border-0 shadow" />
-                            <label asp-for="SelectDate" class="ms-2">Select Date</label>
-                            <span asp-validation-for="SelectDate" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <select asp-for="Status" class="form-select border-0 shadow">
-                                <option disabled selected>--Select Status--</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Approved">Approved</option>
-                                <option value="Rejected">Rejected</option>
-                            </select>
-                            <label asp-for="Status" class="ms-2">Status</label>
-                            <span asp-validation-for="Status" class="text-danger"></span>
-                        </div>
-
-                        <div class="row pt-2">
-                            <div class="col-6 col-md-3">
-                                <button type="submit" class="btn btn-primary form-control">Save</button>
-                            </div>
-                            <div class="col-6 col-md-3">
-                                <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="CustomerId" class="control-label"></label>
+                        <select asp-for="CustomerId" class="form-control">
+                            <option value="">-- Select Customer --</option>
+                            @foreach (var item in ViewBag.CustomerId)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <span asp-validation-for="CustomerId" class="text-danger"></span>
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label asp-for="QuatationId" class="control-label"></label>
+                        <select asp-for="QuatationId" class="form-control">
+                            <option value="">-- Select Quotation --</option>
+                            @foreach (var item in ViewBag.QuatationId)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <span asp-validation-for="QuatationId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SelectDate" class="control-label"></label>
+                        <input asp-for="SelectDate" class="form-control" />
+                        <span asp-validation-for="SelectDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label"></label>
+                        <input asp-for="Status" class="form-control" />
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-outline-secondary ml-3">Cancel</a>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

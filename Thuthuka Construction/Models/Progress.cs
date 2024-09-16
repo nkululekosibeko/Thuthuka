@@ -8,27 +8,14 @@ namespace Thuthuka_Construction.Models
     {
         [Key]
         public int ProgressId { get; set; }
-
+        [Display(Name = "CustomerProject Id")]
         public int CustomerProjectId { get; set; }
         [ForeignKey("CustomerProjectId")]
         [ValidateNever]
         public CustomerProject customerProject { get; set; }
-        public CurrentPhase CurrentPhase { get; set; } 
+        public string CurrentPhase { get; set; } 
 
-        public DateTime UpdateDate { get; set; }  
-    }
-
-    public enum CurrentPhase
-    {
-        Design ,
-        Excavation,
-        Foundation,
-        Roofing,
-        Framing,
-        Plumbing,
-        Painting,
-        Fencing,
-        WindowInstallation,
+        public DateOnly UpdateDate { get; set; }  
     }
 
 }

@@ -19,25 +19,14 @@ namespace Thuthuka_Construction.Models
 
 
         [Display(Name = "Quatation Id")]
-        public int QuatationId { get; set; }
+        public int? QuatationId { get; set; }
         [ForeignKey("QuatationId")]
         [ValidateNever]
         public Quatation Quatation { get; set; }
 
-        public DateTime SelectDate { get; set; }
+        public DateOnly SelectDate { get; set; }
 
-        public Status Status { get; set; }
+        public string Status { get; set; } = " pendind quatation";
     }
-
-
-
-        public enum Status
-        {
-            PendingQuotation,
-            QuotationSent,
-            PendingPayment,
-
-        }
-
     
 }
