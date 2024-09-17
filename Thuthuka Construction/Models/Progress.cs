@@ -8,25 +8,23 @@ namespace Thuthuka_Construction.Models
     {
         [Key]
         public int ProgressId { get; set; }
+
         [Display(Name = "CustomerProject Id")]
         public int CustomerProjectId { get; set; }
+
         [ForeignKey("CustomerProjectId")]
         [ValidateNever]
-        public CustomerProject customerProject { get; set; }
-<<<<<<< HEAD
-        public string CurrentPhase { get; set; } 
+        public CustomerProject CustomerProject { get; set; }
 
-        public DateOnly UpdateDate { get; set; }  
-=======
+        [Display(Name = "Current Phase")]
         public CurrentPhase CurrentPhase { get; set; }
 
-        public DateOnly SelectDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-
+        public DateOnly UpdateDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     }
 
     public enum CurrentPhase
     {
-        Design ,
+        Design,
         Excavation,
         Foundation,
         Roofing,
@@ -34,8 +32,6 @@ namespace Thuthuka_Construction.Models
         Plumbing,
         Painting,
         Fencing,
-        WindowInstallation,
->>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
+        WindowInstallation
     }
-
 }

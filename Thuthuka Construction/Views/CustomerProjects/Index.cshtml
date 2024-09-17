@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-﻿    @model IEnumerable<Thuthuka_Construction.Models.CustomerProject>
-=======
-﻿@* @model IEnumerable<Thuthuka_Construction.Models.CustomerProject>
->>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
-
+@model IEnumerable<Thuthuka_Construction.Models.CustomerProject>
 
 @if (User.IsInRole(SD.Role_Admin))
 {
-
     <div class="card shadow border-0 my-4">
         <div class="card-header bg-primary bg-gradient py-3">
             <div class="row">
@@ -20,7 +14,7 @@
         <div class="card-body p-4">
             <div class="row pb-3">
                 <div class="col-6">
-                    <!-- You can add filters, search, or additional controls here if necessary -->
+                    <!-- Add filters or search here if needed -->
                 </div>
                 <div class="col-6 text-end">
                     <a asp-action="Create" class="btn btn-primary">
@@ -43,10 +37,10 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.Customer.UserName</td> <!-- Display the customer name -->
-                            <td>@item.Project.ProjectName</td> <!-- Display the project name -->
-                            <td>@item.SelectDate.ToString("yyyy-MM-dd")</td>
-                            <td>@item.Status</td>
+                            <td>@item.Customer.UserName</td> <!-- Display customer username -->
+                            <td>@item.Project.ProjectName</td> <!-- Display project name -->
+                            <td>@item.SelectDate.ToString("yyyy-MM-dd")</td> <!-- Format date -->
+                            <td>@item.Status</td> <!-- Display project status -->
                             <td>
                                 <a asp-action="Edit" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-warning">Edit</a>
                                 <a asp-action="Delete" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-danger">Delete</a>
@@ -57,15 +51,9 @@
             </table>
         </div>
     </div>
-
-    @section Scripts {
-    <script src="~/js/customerProject.js"></script>
-    }
 }
-<<<<<<< HEAD
 else
 {
-
     <div class="container my-5">
         <h2 class="text-center mb-4">Customer Projects</h2>
 
@@ -75,12 +63,12 @@ else
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Project: @Html.DisplayFor(modelItem => item.Project.ProjectName)</h5>
-                            <p class="card-text">Customer: @Html.DisplayFor(modelItem => item.Customer.FirstName) @Html.DisplayFor(modelItem => item.Customer.LastName)</p>
-                            <p class="card-text">City: @Html.DisplayFor(modelItem => item.Customer.City)</p>
-                            <p class="card-text">Phone: @Html.DisplayFor(modelItem => item.Customer.PhoneNumber)</p>
-                            <p class="card-text">Status: <span class="badge bg-info">@Html.DisplayFor(modelItem => item.Status)</span></p>
-                            <p class="card-text">Date Selected: @Html.DisplayFor(modelItem => item.SelectDate)</p>
+                            <h5 class="card-title">Project: @item.Project.ProjectName</h5>
+                            <p class="card-text">Customer: @item.Customer.FirstName @item.Customer.LastName</p>
+                            <p class="card-text">City: @item.Customer.City</p>
+                            <p class="card-text">Phone: @item.Customer.PhoneNumber</p>
+                            <p class="card-text">Status: <span class="badge bg-info">@item.Status</span></p>
+                            <p class="card-text">Date Selected: @item.SelectDate.ToString("yyyy-MM-dd")</p>
                             <a href="@Url.Action("CustomerProjectQuotation", new { customerProjectId = item.CustomerProjectId })" class="btn btn-secondary btn-sm">
                                 View Quotation
                             </a>
@@ -90,14 +78,4 @@ else
             }
         </div>
     </div>
-
-
 }
-
-
-
-
- 
-=======
- *@
->>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe

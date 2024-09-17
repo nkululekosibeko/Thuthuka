@@ -20,14 +20,10 @@ namespace Thuthuka_Construction.Models
         public ApplicationUser Foreman { get; set; }
         public Double TotalCost { get; set; }
         public string Resources { get; set; }
-<<<<<<< HEAD
         public DateOnly DateCreated { get; set; }
-=======
         public DateOnly SelectDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
->>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
 
         public string Status { get; set; } = "Sent";
 
-        //Add foreign keys
     }
 }

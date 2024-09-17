@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -17,96 +16,20 @@ namespace Thuthuka_Construction.Controllers
     public class CustomerProjectsController : Controller
     {
         private readonly ApplicationDBContext _context;
-=======
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.Rendering;
-//using Microsoft.EntityFrameworkCore;
-//using Thuthuka_Construction.DB;
-//using Thuthuka_Construction.Models;
 
-//namespace Thuthuka_Construction.Controllers
-//{
-//    public class CustomerProjectsController : Controller
-//    {
-//        private readonly ApplicationDBContext _context;
->>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
+        public CustomerProjectsController(ApplicationDBContext context)
+        {
+            _context = context;
+        }
 
-//        public CustomerProjectsController(ApplicationDBContext context)
-//        {
-//            _context = context;
-//        }
-
-<<<<<<< HEAD
         // GET: CustomerProjects
         public async Task<IActionResult> Index()
         {
             var customerProjectsDBContext = _context.customerProjects
                 .Include(cp => cp.Customer)
                 .Include(cp => cp.Project);
-
             return View(await customerProjectsDBContext.ToListAsync());
         }
-
-
-
-
-
-        public async Task<IActionResult> CustomerProjectProgress()
-        {
-            // Retrieve the user ID of the currently logged-in user
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Check if the user ID was retrieved correctly
-            if (string.IsNullOrEmpty(userId))
-            {
-                // Handle the case where the user ID is not found, and redirect to login
-                ModelState.AddModelError("UserId", "User ID could not be retrieved. Please log in again.");
-                return RedirectToAction("Login", "Account"); // Adjust this to your login page/action
-            }
-
-            // Fetch all projects for the logged-in customer directly from the database
-            var customerProjects = await _context.customerProjects
-                .Include(cp => cp.Project)    // Include related Project entity
-                .Include(cp => cp.Customer)   // Include related Customer entity
-                .Where(cp => cp.CustomerId == userId) // Filter for the currently logged-in user
-                .ToListAsync();
-
-            // Check if there are no projects
-            if (customerProjects == null || !customerProjects.Any())
-            {
-                return NotFound(); // Return 404 if no projects are found
-            }
-
-            // Return the list of projects to the view
-            return View(customerProjects);
-        }
-
-
-        public async Task<IActionResult> CustomerProjectQuotation(int customerProjectId)
-        {
-            // Retrieve the Quotation based on the CustomerProjectId
-            var quotation = await _context.quatations
-                .Include(q => q.customerProject)   // Include the related CustomerProject entity
-                .Include(q => q.Foreman)           // Include the related Foreman (if applicable)
-                .FirstOrDefaultAsync(q => q.CustomerProjectId == customerProjectId);
-
-            ViewBag.Project = quotation.customerProject.Project;
-            // Check if the quotation was found
-            if (quotation == null)
-            {
-                return View("Error404"); // Return 404 if no quotation is found
-            }
-
-            // Return the quotation to the view
-            return View(quotation);
-        }
-
-
-
 
         // GET: CustomerProjects/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -119,41 +42,15 @@ namespace Thuthuka_Construction.Controllers
             var customerProject = await _context.customerProjects
                 .Include(c => c.Customer)
                 .FirstOrDefaultAsync(m => m.CustomerProjectId == id);
+
             if (customerProject == null)
             {
                 return View("Error404");
             }
-=======
-//        // GET: CustomerProjects
-//        public async Task<IActionResult> Index()
-//        {
-//            var applicationDBContext = _context.customerProjects.Include(c => c.Customer).Include(c => c.Quatation);
-//            return View(await applicationDBContext.ToListAsync());
-//        }
 
-//        // GET: CustomerProjects/Details/5
-//        public async Task<IActionResult> Details(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
+            return View(customerProject);
+        }
 
-//            var customerProject = await _context.customerProjects
-//                .Include(c => c.Customer)
-//                .Include(c => c.Quatation)
-//                .FirstOrDefaultAsync(m => m.CustomerProjectId == id);
-//            if (customerProject == null)
-//            {
-//                return NotFound();
-//            }
->>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
-
-//            return View(customerProject);
-//        }
-
-<<<<<<< HEAD
-        // GET: CustomerProjects/Create
         // GET: CustomerProjects/Create
         public IActionResult Create()
         {
@@ -167,21 +64,12 @@ namespace Thuthuka_Construction.Controllers
                                        .Select(u => new { u.Id, u.UserName })
                                        .ToList();
 
-            // Foreman dropdown
             ViewData["ForemanId"] = new SelectList(foremanUsers, "Id", "UserName");
-
-            // ProjectType dropdown
             ViewData["ProjectTypeId"] = new SelectList(_context.projectTypes, "ProjectTypeId", "Name");
 
             return View();
         }
 
-
-
-
-        // POST: CustomerProjects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         // POST: CustomerProjects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -200,18 +88,16 @@ namespace Thuthuka_Construction.Controllers
                                   .Where(ur => ur.RoleId == customerRoleId)
                                   .Select(ur => ur.UserId).ToList();
 
-            var CustomerUsers = _context.applicationUsers
+            var customerUsers = _context.applicationUsers
                                        .Where(u => customer.Contains(u.Id))
                                        .Select(u => new { u.Id, u.UserName })
                                        .ToList();
 
-            // Populate the projects for the ViewBag in case of an error
             ViewBag.Project = new SelectList(await _context.projects.ToListAsync(), "ProjectId", "ProjectName");
-            ViewData["CustomerId"] = new SelectList(CustomerUsers, "Id", "UserName", customerProject.CustomerId); // Display UserName instead of ID
+            ViewData["CustomerId"] = new SelectList(customerUsers, "Id", "UserName", customerProject.CustomerId);
 
             return View(customerProject);
         }
-
 
         // GET: CustomerProjects/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -226,14 +112,14 @@ namespace Thuthuka_Construction.Controllers
             {
                 return NotFound();
             }
+
             ViewBag.Projects = new SelectList(await _context.projects.ToListAsync(), "ProjectId", "ProjectName");
             ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
+
             return View(customerProject);
         }
 
         // POST: CustomerProjects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerProjectId,CustomerId,QuatationId,SelectDate,Status")] CustomerProject customerProject)
@@ -249,7 +135,7 @@ namespace Thuthuka_Construction.Controllers
                 {
                     _context.Update(customerProject);
                     await _context.SaveChangesAsync();
-                    TempData["success"] = "Customer Updated successfull Successfully";
+                    TempData["success"] = "Customer Project Updated Successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -264,8 +150,10 @@ namespace Thuthuka_Construction.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewBag.Projects = new SelectList(await _context.projects.ToListAsync(), "ProjectId", "ProjectName");
             ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
+
             return View(customerProject);
         }
 
@@ -280,142 +168,18 @@ namespace Thuthuka_Construction.Controllers
             var customerProject = await _context.customerProjects
                 .Include(c => c.Customer)
                 .FirstOrDefaultAsync(m => m.CustomerProjectId == id);
+
             if (customerProject == null)
             {
                 return NotFound();
             }
-=======
-//        // GET: CustomerProjects/Create
-//        public IActionResult Create()
-//        {
-//            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id");
-//            ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId");
-//            return View();
-//        }
 
-//        // POST: CustomerProjects/Create
-//        // To protect from overposting attacks, enable the specific properties you want to bind to.
-//        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> Create([Bind("CustomerProjectId,CustomerId,QuatationId,SelectDate,Status")] CustomerProject customerProject)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                _context.Add(customerProject);
-//                await _context.SaveChangesAsync();
-//                TempData["success"] = "Customer Project Created Successfully";
-//                return RedirectToAction(nameof(Index));
-//            }
-//            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
-//            ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId", customerProject.QuatationId);
-//            return View(customerProject);
-//        }
-
-//        // GET: CustomerProjects/Edit/5
-//        public async Task<IActionResult> Edit(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
-
-//            var customerProject = await _context.customerProjects.FindAsync(id);
-//            if (customerProject == null)
-//            {
-//                return NotFound();
-//            }
-//            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
-//            ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId", customerProject.QuatationId);
-//            return View(customerProject);
-//        }
-
-//        // POST: CustomerProjects/Edit/5
-//        // To protect from overposting attacks, enable the specific properties you want to bind to.
-//        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> Edit(int id, [Bind("CustomerProjectId,CustomerId,QuatationId,SelectDate,Status")] CustomerProject customerProject)
-//        {
-//            if (id != customerProject.CustomerProjectId)
-//            {
-//                return NotFound();
-//            }
-
-//            if (ModelState.IsValid)
-//            {
-//                try
-//                {
-//                    _context.Update(customerProject);
-//                    await _context.SaveChangesAsync();
-//                    TempData["success"] = "Customer Project Updated Successfully";
-
-//                }
-//                catch (DbUpdateConcurrencyException)
-//                {
-//                    if (!CustomerProjectExists(customerProject.CustomerProjectId))
-//                    {
-//                        return NotFound();
-//                    }
-//                    else
-//                    {
-//                        throw;
-//                    }
-//                }
-//                return RedirectToAction(nameof(Index));
-//            }
-//            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
-//            ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId", customerProject.QuatationId);
-//            return View(customerProject);
-//        }
-
-//        // GET: CustomerProjects/Delete/5
-//        public async Task<IActionResult> Delete(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return NotFound();
-//            }
-
-//            var customerProject = await _context.customerProjects
-//                .Include(c => c.Customer)
-//                .Include(c => c.Quatation)
-//                .FirstOrDefaultAsync(m => m.CustomerProjectId == id);
-//            if (customerProject == null)
-//            {
-//                return NotFound();
-//            }
->>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
-
-//            return View(customerProject);
-//        }
-
-//        // POST: CustomerProjects/Delete/5
-//        [HttpPost, ActionName("Delete")]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> DeleteConfirmed(int id)
-//        {
-//            var customerProject = await _context.customerProjects.FindAsync(id);
-//            if (customerProject != null)
-//            {
-//                _context.customerProjects.Remove(customerProject);
-//            }
-
-<<<<<<< HEAD
-            await _context.SaveChangesAsync();
-            TempData["success"] = "Customer Project deleted Successfully";
-            return RedirectToAction(nameof(Index));
+            return View(customerProject);
         }
-=======
-//            await _context.SaveChangesAsync();
-//            TempData["success"] = "Customer Project Deleted Successfully";
-//            return RedirectToAction(nameof(Index));
-//        }
->>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
 
-//        private bool CustomerProjectExists(int id)
-//        {
-//            return _context.customerProjects.Any(e => e.CustomerProjectId == id);
-//        }
-//    }
-//}
+        private bool CustomerProjectExists(int id)
+        {
+            return _context.customerProjects.Any(e => e.CustomerProjectId == id);
+        }
+    }
+}

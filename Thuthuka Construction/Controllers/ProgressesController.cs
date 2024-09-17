@@ -24,7 +24,7 @@ namespace Thuthuka_Construction.Controllers
         // GET: Progresses
         public async Task<IActionResult> Index()
         {
-            var applicationDBContext = _context.progresses.Include(p => p.customerProject);
+            var applicationDBContext = _context.progresses.Include(p => p.CustomerProject);
             return View(await applicationDBContext.ToListAsync());
         }
 
@@ -37,7 +37,7 @@ namespace Thuthuka_Construction.Controllers
             }
 
             var progress = await _context.progresses
-                .Include(p => p.customerProject)
+                .Include(p => p.CustomerProject)
                 .FirstOrDefaultAsync(m => m.ProgressId == id);
             if (progress == null)
             {
@@ -136,7 +136,7 @@ namespace Thuthuka_Construction.Controllers
             }
 
             var progress = await _context.progresses
-                .Include(p => p.customerProject)
+                .Include(p => p.CustomerProject)
                 .FirstOrDefaultAsync(m => m.ProgressId == id);
             if (progress == null)
             {

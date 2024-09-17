@@ -200,22 +200,6 @@ namespace Thuthuka_Construction.Controllers
             return View(project);
         }
 
-        public async Task<IActionResult> ListByCategory(int categoryId)
-        {
-            // Fetch the projects that belong to the selected project type (category)
-            var projects = await _context.projects
-                .Include(p => p.ProjectType)
-                .Where(p => p.ProjectTypeId == categoryId)
-                .ToListAsync();
-
-            if (projects == null || !projects.Any())
-            {
-                return NotFound();
-            }
-
-            return View(projects);
-        }
-
         // POST: Projects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
