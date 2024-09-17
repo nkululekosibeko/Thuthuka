@@ -1,68 +1,91 @@
-﻿@model Thuthuka_Construction.Models.CustomerProject
+﻿@* @model Thuthuka_Construction.Models.Project
+
+@{
+    ViewData["Title"] = "Edit Project";
+}
 
 <div class="card shadow border-0 my-4">
-    <div class="card-header bg-warning bg-gradient ml-0 py-3">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Edit Customer Project</h2>
+                <h2 class="text-white py-2">Edit Project</h2>
             </div>
         </div>
     </div>
 
     <div class="card-body p-4">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <form asp-action="Edit" class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="ProjectId" />
 
-                    <!-- Hidden input for CustomerProjectId -->
-                    <input type="hidden" asp-for="CustomerProjectId" />
+            <div class="border p-3">
+                <!-- Project Name -->
+                <div class="form-floating mb-3">
+                    <input asp-for="ProjectName" class="form-control border-0 shadow" />
+                    <label asp-for="ProjectName" class="ms-2">Project Name</label>
+                    <span asp-validation-for="ProjectName" class="text-danger"></span>
+                </div>
 
-                    <!-- Customer Dropdown -->
-                    <div class="form-group">
-                        <label asp-for="CustomerId" class="control-label">Customer</label>
-                        <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId">
-                            <option value="">-- Select Customer --</option>
-                        </select>
-                        <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <!-- Description -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Description" class="form-control border-0 shadow" />
+                    <label asp-for="Description" class="ms-2">Description</label>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <!-- Start Date -->
+                <div class="form-floating mb-3">
+                    <input asp-for="StartDate" class="form-control border-0 shadow" type="date" />
+                    <label asp-for="StartDate" class="ms-2">Start Date</label>
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+
+                <!-- End Date -->
+                <div class="form-floating mb-3">
+                    <input asp-for="EndDate" class="form-control border-0 shadow" type="date" />
+                    <label asp-for="EndDate" class="ms-2">End Date</label>
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+
+                <!-- Project Type -->
+                <div class="form-floating mb-3">
+                    <select asp-for="ProjectTypeId" class="form-select border-0 shadow" asp-items="ViewBag.ProjectTypeId">
+                        <option disabled selected>--Select Project Type--</option>
+                    </select>
+                    <label asp-for="ProjectTypeId" class="ms-2">Project Type</label>
+                    <span asp-validation-for="ProjectTypeId" class="text-danger"></span>
+                </div>
+
+                <!-- Foreman -->
+                <div class="form-floating mb-3">
+                    <select asp-for="ForemanId" class="form-select border-0 shadow" asp-items="ViewBag.ForemanId">
+                        <option disabled selected>--Select Foreman--</option>
+                    </select>
+                    <label asp-for="ForemanId" class="ms-2">Foreman</label>
+                    <span asp-validation-for="ForemanId" class="text-danger"></span>
+                </div>
+
+                <!-- Status -->
+                <div class="form-floating mb-3">
+                    <input asp-for="Status" class="form-control border-0 shadow" />
+                    <label asp-for="Status" class="ms-2">Status</label>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+
+                <div class="row pt-3">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Save</button>
                     </div>
-
-                    <!-- Project Dropdown -->
-                    <div class="form-floating py-2 col-12">
-                        <select asp-for="ProjectId" class="form-select border-0 shadow" asp-items="ViewBag.ProjectId">
-                            <option disabled selected>--Select Project--</option>
-                        </select>
-                        <label asp-for="ProjectId" class="ms-2">Project</label>
-                        <span asp-validation-for="ProjectId" class="text-danger"></span>
+                    <div class="col-6 col-md-3">
+                        <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
                     </div>
-
-                    <!-- Select Date Input -->
-                    <div class="form-group">
-                        <label asp-for="SelectDate" class="control-label">Select Date</label>
-                        <input asp-for="SelectDate" class="form-control" />
-                        <span asp-validation-for="SelectDate" class="text-danger"></span>
-                    </div>
-
-                    <!-- Status Input -->
-                    <div class="form-group">
-                        <label asp-for="Status" class="control-label">Status</label>
-                        <input asp-for="Status" class="form-control" />
-                        <span asp-validation-for="Status" class="text-danger"></span>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="form-group mt-4">
-                        <input type="submit" value="Save Changes" class="btn btn-primary" />
-                        <a asp-action="Index" class="btn btn-outline-secondary ml-3">Cancel</a>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.RenderPartialAsync("_ValidationScriptsPartial")
 }
+ *@

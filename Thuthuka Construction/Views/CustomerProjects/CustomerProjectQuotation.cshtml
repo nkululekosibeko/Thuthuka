@@ -5,7 +5,7 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <h5 class="card-title">Customer Project: @Model.customerProject.Project.ProjectName</h5>
+            @* <h5 class="card-title">Customer Project: @Model.customerProject.Project.ProjectName</h5> *@
             <p class="card-text">Foreman: @Model.Foreman.UserName</p>
             <p class="card-text">Resources: @Model.Resources</p>
             <p class="card-text">Total Cost: R@Model.TotalCost</p>
@@ -14,5 +14,14 @@
         </div>
     </div>
 
-    <a href="@Url.Action("CustomerProjectProgress", "Customer")" class="btn btn-primary mt-3">Back to Projects</a>
+    <div class="mt-4">
+@*         <form method="post" asp-action="AcceptQuotation"  class="d-inline">
+            <button type="submit" class="btn btn-success">Accept Quotation</button>
+        </form>
+        <form method="post" asp-action="DeclineQuotation" asp-route-id="@Model.QuatationId" class="d-inline">
+            <button type="submit" class="btn btn-danger">Decline Quotation</button>
+        </form> *@
+        <a class="btn btn-primary mt-3" asp-area="" asp-controller="CustomerProjects" asp-action="CustomerProjectProgress">Back to Project List</a>
+    </div>
+
 </div>

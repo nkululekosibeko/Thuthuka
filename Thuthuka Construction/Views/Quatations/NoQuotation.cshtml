@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Quotation Not Available";
+}
+
+<div class="container my-5">
+    <div class="alert alert-warning text-center">
+        <h2>Quotation Not Available</h2>
+        <p>The Foreman has not yet created a project quotation for this project. Please check back later.</p>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="@Url.Action("CustomerProjects", "Customer")" class="btn btn-primary">
+            Back to Project List
+        </a>
+    </div>
+</div>

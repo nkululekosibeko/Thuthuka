@@ -49,6 +49,49 @@ namespace Thuthuka_Construction.Controllers
             return View(quatation);
         }
 
+        // POST: Accept Quotation
+        [HttpPost]
+        public IActionResult AcceptQuotation(int id)
+        {
+            var quotation = _context.quatations.Find(id);  // Find the quotation by ID
+            if (quotation == null)
+            {
+                return NotFound();  // Handle case where quotation is not found
+            }
+
+            quotation.Status = "Quotation Accepted";  // Update the status to "Accepted"
+            _context.Update(quotation);  // Update the quotation in the database
+            _context.SaveChanges();  // Save the changes
+
+            TempData["success"] = "Quotation Accepted, the foreman will be notified";  // Set a success message
+
+            return RedirectToAction("CustomerProjectProgress", "CustomerProjects");  // Redirect to another page
+        }
+
+        // POST: Decline Quotation
+        [HttpPost]
+        public IActionResult DeclineQuotation(int id)
+        {
+            var quotation = _context.quatations.Find(id);  // Find the quotation by ID
+            if (quotation == null)
+            {
+                return NotFound();  // Handle case where quotation is not found
+            }
+
+            quotation.Status = "Quotation Declined";  // Update the status to "Declined"
+            _context.Update(quotation);  // Update the quotation in the database
+            _context.SaveChanges();  // Save the changes
+
+            TempData["success"] = "Quotation Declined, the foreman will be notified";  // Set a success message
+
+            return RedirectToAction("CustomerProjectProgress", "CustomerProjects");  // Redirect to another page
+        }
+
+
+
+
+
+
         // GET: Quatations/Create
         public IActionResult Create()
         {

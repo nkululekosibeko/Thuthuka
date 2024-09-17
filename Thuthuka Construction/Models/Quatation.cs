@@ -22,7 +22,7 @@ namespace Thuthuka_Construction.Models
         public string Resources { get; set; }
         public DateOnly DateCreated { get; set; }
 
-        public string Status { get; set; } = "Sent";
+        public string Status { get; set; } = "Pending";
 
         //Add foreign keys
     }

@@ -66,6 +66,11 @@ namespace Thuthuka_Construction.Controllers
             return View(customerProjects);
         }
 
+        public IActionResult NoQuotation()
+        {
+            return View();
+        }
+
 
         public async Task<IActionResult> CustomerProjectQuotation(int customerProjectId)
         {
@@ -75,16 +80,21 @@ namespace Thuthuka_Construction.Controllers
                 .Include(q => q.Foreman)           // Include the related Foreman (if applicable)
                 .FirstOrDefaultAsync(q => q.CustomerProjectId == customerProjectId);
 
-            ViewBag.Project = quotation.customerProject.Project;
+
             // Check if the quotation was found
             if (quotation == null)
             {
-                return View("Error404"); // Return 404 if no quotation is found
+                return RedirectToAction("NoQuotation"); // Return 404 if no quotation is found
             }
+
+            ViewBag.Project = quotation.customerProject.Project;
 
             // Return the quotation to the view
             return View(quotation);
         }
+
+
+
 
 
 
