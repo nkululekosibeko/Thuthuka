@@ -1,55 +1,95 @@
-﻿@model IEnumerable<Thuthuka_Construction.Models.CustomerProject>
+﻿    @model IEnumerable<Thuthuka_Construction.Models.CustomerProject>
 
-<div class="card shadow border-0 my-4">
-    <div class="card-header bg-primary bg-gradient py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Customer Projects</h2>
-            </div>
-        </div>
-    </div>
 
-    <div class="card-body p-4">
-        <div class="row pb-3">
-            <div class="col-6">
-                <!-- You can add filters, search, or additional controls here if necessary -->
-            </div>
-            <div class="col-6 text-end">
-                <a asp-action="Create" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Create New Customer Project
-                </a>
+@if (User.IsInRole(SD.Role_Admin))
+{
+
+    <div class="card shadow border-0 my-4">
+        <div class="card-header bg-primary bg-gradient py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-white py-2">Customer Projects</h2>
+                </div>
             </div>
         </div>
 
-        <table class="table table-bordered table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Customer</th>
-                    <th>Quotation</th>
-                    <th>Select Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        <div class="card-body p-4">
+            <div class="row pb-3">
+                <div class="col-6">
+                    <!-- You can add filters, search, or additional controls here if necessary -->
+                </div>
+                <div class="col-6 text-end">
+                    <a asp-action="Create" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Create New Customer Project
+                    </a>
+                </div>
+            </div>
+
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Customer.Id)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Quatation.QuatationId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.SelectDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-warning">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-danger">Delete</a>
-                        </td>
+                        <th>Customer</th>
+                        <th>Project</th>
+                        <th>Select Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Customer.UserName</td> <!-- Display the customer name -->
+                            <td>@item.Project.ProjectName</td> <!-- Display the project name -->
+                            <td>@item.SelectDate.ToString("yyyy-MM-dd")</td>
+                            <td>@item.Status</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-warning">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@item.CustomerProjectId" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-@section Scripts {
+    @section Scripts {
     <script src="~/js/customerProject.js"></script>
+    }
 }
+else
+{
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Customer Projects</h2>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Project: @Html.DisplayFor(modelItem => item.Project.ProjectName)</h5>
+                            <p class="card-text">Customer: @Html.DisplayFor(modelItem => item.Customer.FirstName) @Html.DisplayFor(modelItem => item.Customer.LastName)</p>
+                            <p class="card-text">City: @Html.DisplayFor(modelItem => item.Customer.City)</p>
+                            <p class="card-text">Phone: @Html.DisplayFor(modelItem => item.Customer.PhoneNumber)</p>
+                            <p class="card-text">Status: <span class="badge bg-info">@Html.DisplayFor(modelItem => item.Status)</span></p>
+                            <p class="card-text">Date Selected: @Html.DisplayFor(modelItem => item.SelectDate)</p>
+                            <a href="@Url.Action("CustomerProjectQuotation", new { customerProjectId = item.CustomerProjectId })" class="btn btn-secondary btn-sm">
+                                View Quotation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+}
+
+
+
+
+ 

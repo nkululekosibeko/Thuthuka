@@ -17,12 +17,12 @@ namespace Thuthuka_Construction.Models
         [ValidateNever]
         public ApplicationUser Customer { get; set; }
 
+        [Display(Name = "Project Id")]
 
-        [Display(Name = "Quatation Id")]
-        public int? QuatationId { get; set; }
-        [ForeignKey("QuatationId")]
+        public int ProjectId { get; set; }
+        [ForeignKey("ProjectId")]
         [ValidateNever]
-        public Quatation Quatation { get; set; }
+        public Project Project { get; set; }
 
         public DateOnly SelectDate { get; set; }
 

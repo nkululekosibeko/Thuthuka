@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Thuthuka_Construction.DB;
 
@@ -11,9 +12,11 @@ using Thuthuka_Construction.DB;
 namespace Thuthuka_Construction.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240917000013_RemovedFKOnCustomerProject")]
+    partial class RemovedFKOnCustomerProject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,9 +244,6 @@ namespace Thuthuka_Construction.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
                     b.Property<DateOnly>("SelectDate")
                         .HasColumnType("date");
 
@@ -254,8 +254,6 @@ namespace Thuthuka_Construction.Migrations
                     b.HasKey("CustomerProjectId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("customerProjects");
                 });
@@ -468,15 +466,7 @@ namespace Thuthuka_Construction.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Thuthuka_Construction.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Customer");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.Progress", b =>

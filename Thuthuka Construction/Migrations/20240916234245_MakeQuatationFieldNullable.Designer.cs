@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Thuthuka_Construction.DB;
 
@@ -11,9 +12,11 @@ using Thuthuka_Construction.DB;
 namespace Thuthuka_Construction.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240916234245_MakeQuatationFieldNullable")]
+    partial class MakeQuatationFieldNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +244,7 @@ namespace Thuthuka_Construction.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("QuatationId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("SelectDate")
@@ -255,7 +258,7 @@ namespace Thuthuka_Construction.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("QuatationId");
 
                     b.ToTable("customerProjects");
                 });
@@ -468,15 +471,13 @@ namespace Thuthuka_Construction.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Thuthuka_Construction.Models.Project", "Project")
+                    b.HasOne("Thuthuka_Construction.Models.Quatation", "Quatation")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("QuatationId");
 
                     b.Navigation("Customer");
 
-                    b.Navigation("Project");
+                    b.Navigation("Quatation");
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.Progress", b =>

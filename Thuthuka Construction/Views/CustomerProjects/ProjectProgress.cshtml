@@ -1,0 +1,32 @@
+﻿@model Thuthuka_Construction.Models.CustomerProject
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Project Progress</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <dl class="row">
+            <dt class="col-sm-3">Project Name</dt>
+            <dd class="col-sm-9">@Model.Project.ProjectName</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">@Model.Status</dd>
+
+            <dt class="col-sm-3">Start Date</dt>
+            <dd class="col-sm-9">@Model.SelectDate.ToString("yyyy-MM-dd")</dd>
+
+            <!-- You can add more project progress information here -->
+        </dl>
+
+        <div class="row pt-4">
+            <div class="col-6 col-md-3">
+                <a class="btn btn-outline-primary border form-control" href="/Projects">Back to Projects</a>
+            </div>
+        </div>
+    </div>
+</div>

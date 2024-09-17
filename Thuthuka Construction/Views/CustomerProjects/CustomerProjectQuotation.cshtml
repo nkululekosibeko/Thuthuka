@@ -1,0 +1,18 @@
+﻿@model Thuthuka_Construction.Models.Quatation
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Quotation Details</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Customer Project: @Model.customerProject.Project.ProjectName</h5>
+            <p class="card-text">Foreman: @Model.Foreman.UserName</p>
+            <p class="card-text">Resources: @Model.Resources</p>
+            <p class="card-text">Total Cost: R@Model.TotalCost</p>
+            <p class="card-text">Date Created: @Model.DateCreated.ToShortDateString()</p>
+            <p class="card-text">Status: <span class="badge bg-info">@Model.Status</span></p>
+        </div>
+    </div>
+
+    <a href="@Url.Action("CustomerProjectProgress", "Customer")" class="btn btn-primary mt-3">Back to Projects</a>
+</div>

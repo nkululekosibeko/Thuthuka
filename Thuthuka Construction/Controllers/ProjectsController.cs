@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Thuthuka_Construction.Models;
 
 namespace Thuthuka_Construction.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         private readonly ApplicationDBContext _context;
@@ -134,11 +136,19 @@ namespace Thuthuka_Construction.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            // Create a new CustomerProject instance
+            // Check if the project exists
+            var project = await _context.projects.FindAsync(projectId);
+            if (project == null)
+            {
+                TempData["error"] = "The project you are trying to select does not exist.";
+                return RedirectToAction("Index", "Projects"); // Redirect back to project list or any appropriate page
+            }
+
+            // Create a new CustomerProject instance and assign the selected ProjectId
             var _customerProject = new CustomerProject
             {
                 CustomerId = userId,
-                QuatationId = 0, // Placeholder, will be set later
+                ProjectId = projectId, // Assign the project ID here
                 SelectDate = DateOnly.FromDateTime(DateTime.Now),
                 Status = "pending quotation"
             };
@@ -147,9 +157,13 @@ namespace Thuthuka_Construction.Controllers
             _context.customerProjects.Add(_customerProject);
             await _context.SaveChangesAsync();
 
-            // Redirect to a confirmation page or the project details page
-            return RedirectToAction("ProjectDetails", new { id = projectId });
+            // Inform the user that their project was successfully created
+            TempData["success"] = "Project selected. The foreman will be notified to create a quotation.";
+
+            // Redirect to the Customer Project Progress or Details page
+            return RedirectToAction("Index", "Home");
         }
+
 
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
