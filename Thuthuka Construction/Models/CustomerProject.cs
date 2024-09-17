@@ -19,12 +19,22 @@ namespace Thuthuka_Construction.Models
 
         [Display(Name = "Project Id")]
 
+<<<<<<< HEAD
+=======
+        [Display(Name = "Project Id")]
+>>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
         public int ProjectId { get; set; }
         [ForeignKey("ProjectId")]
         [ValidateNever]
         public Project Project { get; set; }
+<<<<<<< HEAD
 
         public DateOnly SelectDate { get; set; }
+=======
+
+        public DateOnly SelectDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
+>>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
 
         public string Status { get; set; } = " pendind quatation";
     }

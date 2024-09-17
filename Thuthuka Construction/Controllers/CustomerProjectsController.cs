@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,30 @@ namespace Thuthuka_Construction.Controllers
     public class CustomerProjectsController : Controller
     {
         private readonly ApplicationDBContext _context;
+=======
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc.Rendering;
+//using Microsoft.EntityFrameworkCore;
+//using Thuthuka_Construction.DB;
+//using Thuthuka_Construction.Models;
 
-        public CustomerProjectsController(ApplicationDBContext context)
-        {
-            _context = context;
-        }
+//namespace Thuthuka_Construction.Controllers
+//{
+//    public class CustomerProjectsController : Controller
+//    {
+//        private readonly ApplicationDBContext _context;
+>>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
 
+//        public CustomerProjectsController(ApplicationDBContext context)
+//        {
+//            _context = context;
+//        }
+
+<<<<<<< HEAD
         // GET: CustomerProjects
         public async Task<IActionResult> Index()
         {
@@ -104,10 +123,36 @@ namespace Thuthuka_Construction.Controllers
             {
                 return View("Error404");
             }
+=======
+//        // GET: CustomerProjects
+//        public async Task<IActionResult> Index()
+//        {
+//            var applicationDBContext = _context.customerProjects.Include(c => c.Customer).Include(c => c.Quatation);
+//            return View(await applicationDBContext.ToListAsync());
+//        }
 
-            return View(customerProject);
-        }
+//        // GET: CustomerProjects/Details/5
+//        public async Task<IActionResult> Details(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return NotFound();
+//            }
 
+//            var customerProject = await _context.customerProjects
+//                .Include(c => c.Customer)
+//                .Include(c => c.Quatation)
+//                .FirstOrDefaultAsync(m => m.CustomerProjectId == id);
+//            if (customerProject == null)
+//            {
+//                return NotFound();
+//            }
+>>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
+
+//            return View(customerProject);
+//        }
+
+<<<<<<< HEAD
         // GET: CustomerProjects/Create
         // GET: CustomerProjects/Create
         public IActionResult Create()
@@ -239,29 +284,138 @@ namespace Thuthuka_Construction.Controllers
             {
                 return NotFound();
             }
+=======
+//        // GET: CustomerProjects/Create
+//        public IActionResult Create()
+//        {
+//            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id");
+//            ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId");
+//            return View();
+//        }
 
-            return View(customerProject);
-        }
+//        // POST: CustomerProjects/Create
+//        // To protect from overposting attacks, enable the specific properties you want to bind to.
+//        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public async Task<IActionResult> Create([Bind("CustomerProjectId,CustomerId,QuatationId,SelectDate,Status")] CustomerProject customerProject)
+//        {
+//            if (ModelState.IsValid)
+//            {
+//                _context.Add(customerProject);
+//                await _context.SaveChangesAsync();
+//                TempData["success"] = "Customer Project Created Successfully";
+//                return RedirectToAction(nameof(Index));
+//            }
+//            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
+//            ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId", customerProject.QuatationId);
+//            return View(customerProject);
+//        }
 
-        // POST: CustomerProjects/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var customerProject = await _context.customerProjects.FindAsync(id);
-            if (customerProject != null)
-            {
-                _context.customerProjects.Remove(customerProject);
-            }
+//        // GET: CustomerProjects/Edit/5
+//        public async Task<IActionResult> Edit(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return NotFound();
+//            }
 
+//            var customerProject = await _context.customerProjects.FindAsync(id);
+//            if (customerProject == null)
+//            {
+//                return NotFound();
+//            }
+//            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
+//            ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId", customerProject.QuatationId);
+//            return View(customerProject);
+//        }
+
+//        // POST: CustomerProjects/Edit/5
+//        // To protect from overposting attacks, enable the specific properties you want to bind to.
+//        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public async Task<IActionResult> Edit(int id, [Bind("CustomerProjectId,CustomerId,QuatationId,SelectDate,Status")] CustomerProject customerProject)
+//        {
+//            if (id != customerProject.CustomerProjectId)
+//            {
+//                return NotFound();
+//            }
+
+//            if (ModelState.IsValid)
+//            {
+//                try
+//                {
+//                    _context.Update(customerProject);
+//                    await _context.SaveChangesAsync();
+//                    TempData["success"] = "Customer Project Updated Successfully";
+
+//                }
+//                catch (DbUpdateConcurrencyException)
+//                {
+//                    if (!CustomerProjectExists(customerProject.CustomerProjectId))
+//                    {
+//                        return NotFound();
+//                    }
+//                    else
+//                    {
+//                        throw;
+//                    }
+//                }
+//                return RedirectToAction(nameof(Index));
+//            }
+//            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
+//            ViewData["QuatationId"] = new SelectList(_context.quatations, "QuatationId", "QuatationId", customerProject.QuatationId);
+//            return View(customerProject);
+//        }
+
+//        // GET: CustomerProjects/Delete/5
+//        public async Task<IActionResult> Delete(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return NotFound();
+//            }
+
+//            var customerProject = await _context.customerProjects
+//                .Include(c => c.Customer)
+//                .Include(c => c.Quatation)
+//                .FirstOrDefaultAsync(m => m.CustomerProjectId == id);
+//            if (customerProject == null)
+//            {
+//                return NotFound();
+//            }
+>>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
+
+//            return View(customerProject);
+//        }
+
+//        // POST: CustomerProjects/Delete/5
+//        [HttpPost, ActionName("Delete")]
+//        [ValidateAntiForgeryToken]
+//        public async Task<IActionResult> DeleteConfirmed(int id)
+//        {
+//            var customerProject = await _context.customerProjects.FindAsync(id);
+//            if (customerProject != null)
+//            {
+//                _context.customerProjects.Remove(customerProject);
+//            }
+
+<<<<<<< HEAD
             await _context.SaveChangesAsync();
             TempData["success"] = "Customer Project deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
+=======
+//            await _context.SaveChangesAsync();
+//            TempData["success"] = "Customer Project Deleted Successfully";
+//            return RedirectToAction(nameof(Index));
+//        }
+>>>>>>> d7d0007e1aa5d3c57322c4fe9ebb4f4b85619fbe
 
-        private bool CustomerProjectExists(int id)
-        {
-            return _context.customerProjects.Any(e => e.CustomerProjectId == id);
-        }
-    }
-}
+//        private bool CustomerProjectExists(int id)
+//        {
+//            return _context.customerProjects.Any(e => e.CustomerProjectId == id);
+//        }
+//    }
+//}
