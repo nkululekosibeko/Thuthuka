@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -32,73 +31,6 @@ namespace Thuthuka_Construction.Controllers
             return View(await customerProjectsDBContext.ToListAsync());
         }
 
-
-
-
-
-        public async Task<IActionResult> CustomerProjectProgress()
-        {
-            // Retrieve the user ID of the currently logged-in user
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Check if the user ID was retrieved correctly
-            if (string.IsNullOrEmpty(userId))
-            {
-                // Handle the case where the user ID is not found, and redirect to login
-                ModelState.AddModelError("UserId", "User ID could not be retrieved. Please log in again.");
-                return RedirectToAction("Login", "Account"); // Adjust this to your login page/action
-            }
-
-            // Fetch all projects for the logged-in customer directly from the database
-            var customerProjects = await _context.customerProjects
-                .Include(cp => cp.Project)    // Include related Project entity
-                .Include(cp => cp.Customer)   // Include related Customer entity
-                .Where(cp => cp.CustomerId == userId) // Filter for the currently logged-in user
-                .ToListAsync();
-
-            // Check if there are no projects
-            if (customerProjects == null || !customerProjects.Any())
-            {
-                return NotFound(); // Return 404 if no projects are found
-            }
-
-            // Return the list of projects to the view
-            return View(customerProjects);
-        }
-
-        public IActionResult NoQuotation()
-        {
-            return View();
-        }
-
-
-        public async Task<IActionResult> CustomerProjectQuotation(int customerProjectId)
-        {
-            // Retrieve the Quotation based on the CustomerProjectId
-            var quotation = await _context.quatations
-                .Include(q => q.customerProject)   // Include the related CustomerProject entity
-                .Include(q => q.Foreman)           // Include the related Foreman (if applicable)
-                .FirstOrDefaultAsync(q => q.CustomerProjectId == customerProjectId);
-
-
-            // Check if the quotation was found
-            if (quotation == null)
-            {
-                return RedirectToAction("NoQuotation"); // Return 404 if no quotation is found
-            }
-
-            ViewBag.Project = quotation.customerProject.Project;
-
-            // Return the quotation to the view
-            return View(quotation);
-        }
-
-
-
-
-
-
-
         // GET: CustomerProjects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -109,7 +41,9 @@ namespace Thuthuka_Construction.Controllers
 
             var customerProject = await _context.customerProjects
                 .Include(c => c.Customer)
+                .Include(c => c.Project)
                 .FirstOrDefaultAsync(m => m.CustomerProjectId == id);
+
             if (customerProject == null)
             {
                 return View("Error404");
@@ -119,34 +53,24 @@ namespace Thuthuka_Construction.Controllers
         }
 
         // GET: CustomerProjects/Create
-        // GET: CustomerProjects/Create
         public IActionResult Create()
         {
-            var foremanRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Foreman")?.Id;
-            var foremen = _context.UserRoles
-                                  .Where(ur => ur.RoleId == foremanRoleId)
+            var customerRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Customer")?.Id;
+            var customer = _context.UserRoles
+                                  .Where(ur => ur.RoleId == customerRoleId)
                                   .Select(ur => ur.UserId).ToList();
 
-            var foremanUsers = _context.applicationUsers
-                                       .Where(u => foremen.Contains(u.Id))
+            var CustomerUsers = _context.applicationUsers
+                                       .Where(u => customer.Contains(u.Id))
                                        .Select(u => new { u.Id, u.UserName })
                                        .ToList();
 
-            // Foreman dropdown
-            ViewData["ForemanId"] = new SelectList(foremanUsers, "Id", "UserName");
-
-            // ProjectType dropdown
-            ViewData["ProjectTypeId"] = new SelectList(_context.projectTypes, "ProjectTypeId", "Name");
+            ViewData["CustomerId"] = new SelectList(CustomerUsers, "Id", "UserName");
+            ViewBag.Projects = new SelectList(_context.projects, "ProjectId", "ProjectName");
 
             return View();
         }
 
-
-
-
-        // POST: CustomerProjects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         // POST: CustomerProjects/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -170,51 +94,73 @@ namespace Thuthuka_Construction.Controllers
                                        .Select(u => new { u.Id, u.UserName })
                                        .ToList();
 
-            // Populate the projects for the ViewBag in case of an error
-            ViewBag.Project = new SelectList(await _context.projects.ToListAsync(), "ProjectId", "ProjectName");
-            ViewData["CustomerId"] = new SelectList(CustomerUsers, "Id", "UserName", customerProject.CustomerId); // Display UserName instead of ID
+            ViewData["CustomerId"] = new SelectList(CustomerUsers, "Id", "UserName", customerProject.CustomerId);
+            ViewBag.Projects = new SelectList(await _context.projects.ToListAsync(), "ProjectId", "ProjectName");
 
             return View(customerProject);
         }
 
-
         // GET: CustomerProjects/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // Check for a valid ID
             if (id == null)
             {
                 return View("Error404");
             }
 
+            // Fetch the customer project based on the provided ID
             var customerProject = await _context.customerProjects.FindAsync(id);
             if (customerProject == null)
             {
-                return NotFound();
+                return View("Error404");
             }
-            ViewBag.Projects = new SelectList(await _context.projects.ToListAsync(), "ProjectId", "ProjectName");
-            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
+
+            // Fetch all users with the "Customer" role
+            var customerRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Customer")?.Id;
+            var customerIds = _context.UserRoles
+                                   .Where(ur => ur.RoleId == customerRoleId)
+                                   .Select(ur => ur.UserId).ToList();
+
+            var CustomerUsers = _context.applicationUsers
+                                        .Where(u => customerIds.Contains(u.Id))
+                                        .Select(u => new { u.Id, u.UserName })
+                                        .ToList();
+
+            // Populate ViewData for dropdowns
+            ViewData["CustomerId"] = new SelectList(CustomerUsers, "Id", "UserName", customerProject.CustomerId);
+            ViewData["ProjectId"] = new SelectList(_context.projects, "ProjectId", "ProjectName", customerProject.ProjectId);
+
             return View(customerProject);
         }
 
+
         // POST: CustomerProjects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerProjectId,CustomerId,QuatationId,SelectDate,Status")] CustomerProject customerProject)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerProjectId,CustomerId,QuatationId,SelectDate,Status,ProjectId")] CustomerProject customerProject)
         {
+            // Check if the ID in the form matches the one in the route
             if (id != customerProject.CustomerProjectId)
             {
                 return View("Error404");
             }
 
+            // Optional: Add validation for status updates or other fields if needed
+            // if (customerProject.Status == "InvalidStatus")
+            // {
+            //     ModelState.AddModelError("", "Invalid status provided.");
+            // }
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    customerProject.SelectDate = DateOnly.FromDateTime(DateTime.Now);
+                    // Update the customer project
                     _context.Update(customerProject);
                     await _context.SaveChangesAsync();
-                    TempData["success"] = "Customer Updated successfull Successfully";
+                    TempData["success"] = "Customer project updated successfully.";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -227,12 +173,17 @@ namespace Thuthuka_Construction.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Projects = new SelectList(await _context.projects.ToListAsync(), "ProjectId", "ProjectName");
-            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "Id", customerProject.CustomerId);
+
+            // If the ModelState is invalid, repopulate ViewData for dropdowns
+            ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "UserName", customerProject.CustomerId);
+            ViewData["ProjectId"] = new SelectList(_context.projects, "ProjectId", "ProjectName", customerProject.ProjectId);
+
             return View(customerProject);
         }
+
 
         // GET: CustomerProjects/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -244,10 +195,11 @@ namespace Thuthuka_Construction.Controllers
 
             var customerProject = await _context.customerProjects
                 .Include(c => c.Customer)
+                .Include(c => c.Project)
                 .FirstOrDefaultAsync(m => m.CustomerProjectId == id);
             if (customerProject == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(customerProject);
@@ -272,6 +224,52 @@ namespace Thuthuka_Construction.Controllers
         private bool CustomerProjectExists(int id)
         {
             return _context.customerProjects.Any(e => e.CustomerProjectId == id);
+        }
+
+        // Additional Custom Methods
+
+        public async Task<IActionResult> CustomerProjectProgress()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                ModelState.AddModelError("UserId", "User ID could not be retrieved. Please log in again.");
+                return RedirectToAction("Login", "Account");
+            }
+
+            var customerProjects = await _context.customerProjects
+                .Include(cp => cp.Project)
+                .Include(cp => cp.Customer)
+                .Where(cp => cp.CustomerId == userId)
+                .ToListAsync();
+
+            if (customerProjects == null || !customerProjects.Any())
+            {
+                return NotFound();
+            }
+
+            return View(customerProjects);
+        }
+
+        public IActionResult NoQuotation()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> CustomerProjectQuotation(int customerProjectId)
+        {
+            var quotation = await _context.quatations
+                .Include(q => q.customerProject)
+                .Include(q => q.Foreman)
+                .FirstOrDefaultAsync(q => q.CustomerProjectId == customerProjectId);
+
+            if (quotation == null)
+            {
+                return RedirectToAction("NoQuotation");
+            }
+
+            ViewBag.Project = quotation.customerProject.Project;
+            return View(quotation);
         }
     }
 }
