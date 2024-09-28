@@ -33,7 +33,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var progress = await _context.progresses
@@ -41,7 +41,7 @@ namespace Thuthuka_Construction.Controllers
                 .FirstOrDefaultAsync(m => m.ProgressId == id);
             if (progress == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(progress);
@@ -77,13 +77,13 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var progress = await _context.progresses.FindAsync(id);
             if (progress == null)
             {
-                return NotFound();
+                return View("Error404");
             }
             ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", progress.CustomerProjectId);
             return View(progress);
@@ -98,7 +98,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id != progress.ProgressId)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             if (ModelState.IsValid)
@@ -114,7 +114,7 @@ namespace Thuthuka_Construction.Controllers
                 {
                     if (!ProgressExists(progress.ProgressId))
                     {
-                        return NotFound();
+                        return View("Error404");
                     }
                     else
                     {
@@ -132,7 +132,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var progress = await _context.progresses
@@ -140,7 +140,7 @@ namespace Thuthuka_Construction.Controllers
                 .FirstOrDefaultAsync(m => m.ProgressId == id);
             if (progress == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(progress);

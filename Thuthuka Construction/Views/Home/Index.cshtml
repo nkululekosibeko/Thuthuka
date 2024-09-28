@@ -37,7 +37,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Commercial</h5>
                             <p class="card-text">Explore our commercial projects, including office buildings, retail spaces, and more.</p>
-                            <a href="/Projects/ListByCategory?categoryId=2" class="btn btn-outline-primary">View Commercial Projects</a>
+                            <a asp-controller="Projects" asp-action="ListByCategory" asp-route-categoryId="2" class="btn btn-outline-primary">View Commercial Projects</a>
+
                         </div>
                     </div>
                 </div>
@@ -47,7 +48,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Industrial</h5>
                             <p class="card-text">We specialize in industrial construction, including warehouses and manufacturing facilities.</p>
-                            <a href="/Projects/ListByCategory?categoryId=3" class="btn btn-outline-primary">View Industrial Projects</a>
+                            <a asp-controller="Projects" asp-action="ListByCategory" asp-route-categoryId="3" class="btn btn-outline-primary">View Industrial Projects</a>
+
                         </div>
                     </div>
                 </div>

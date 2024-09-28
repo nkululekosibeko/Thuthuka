@@ -34,7 +34,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var quatation = await _context.quatations
@@ -43,7 +43,7 @@ namespace Thuthuka_Construction.Controllers
                 .FirstOrDefaultAsync(m => m.QuatationId == id);
             if (quatation == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(quatation);
@@ -145,13 +145,13 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var quatation = await _context.quatations.FindAsync(id);
             if (quatation == null)
             {
-                return NotFound();
+                return View("Error404");
             }
             ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", quatation.ForemanId);
             ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", quatation.CustomerProjectId);
@@ -183,7 +183,7 @@ namespace Thuthuka_Construction.Controllers
                 {
                     if (!QuatationExists(quatation.QuatationId))
                     {
-                        return NotFound();
+                        return View("Error404");
                     }
                     else
                     {
@@ -202,7 +202,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var quatation = await _context.quatations
@@ -211,7 +211,7 @@ namespace Thuthuka_Construction.Controllers
                 .FirstOrDefaultAsync(m => m.QuatationId == id);
             if (quatation == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(quatation);

@@ -245,7 +245,7 @@ namespace Thuthuka_Construction.Controllers
 
             if (customerProjects == null || !customerProjects.Any())
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(customerProjects);

@@ -34,7 +34,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var project = await _context.projects
@@ -43,7 +43,7 @@ namespace Thuthuka_Construction.Controllers
                 .FirstOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(project);
@@ -118,7 +118,7 @@ namespace Thuthuka_Construction.Controllers
 
             if (projects == null || !projects.Any())
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(projects);
@@ -170,13 +170,13 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var project = await _context.projects.FindAsync(id);
             if (project == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var foremanRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Foreman")?.Id;
@@ -207,7 +207,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id != project.ProjectId)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             // Validate date ranges
@@ -228,7 +228,7 @@ namespace Thuthuka_Construction.Controllers
                 {
                     if (!ProjectExists(project.ProjectId))
                     {
-                        return NotFound();
+                        return View("Error404");
                     }
                     else
                     {
@@ -248,7 +248,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var project = await _context.projects
@@ -257,7 +257,7 @@ namespace Thuthuka_Construction.Controllers
                 .FirstOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(project);

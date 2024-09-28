@@ -32,14 +32,14 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var projectType = await _context.projectTypes
                 .FirstOrDefaultAsync(m => m.ProjectTypeId == id);
             if (projectType == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(projectType);
@@ -73,13 +73,13 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var projectType = await _context.projectTypes.FindAsync(id);
             if (projectType == null)
             {
-                return NotFound();
+                return View("Error404"); 
             }
             return View(projectType);
         }
@@ -93,7 +93,7 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id != projectType.ProjectTypeId)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             if (ModelState.IsValid)
@@ -108,7 +108,7 @@ namespace Thuthuka_Construction.Controllers
                 {
                     if (!ProjectTypeExists(projectType.ProjectTypeId))
                     {
-                        return NotFound();
+                        return View("Error404");
                     }
                     else
                     {
@@ -125,14 +125,14 @@ namespace Thuthuka_Construction.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             var projectType = await _context.projectTypes
                 .FirstOrDefaultAsync(m => m.ProjectTypeId == id);
             if (projectType == null)
             {
-                return NotFound();
+                return View("Error404");
             }
 
             return View(projectType);
