@@ -6,6 +6,7 @@ namespace Thuthuka_Construction.Models
     {
         [Key]
         public int ProjectTypeId { get; set; }
+        [Required]
         public string ProjectTypeName { get; set; }
 
     }

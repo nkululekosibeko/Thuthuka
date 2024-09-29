@@ -15,7 +15,7 @@ namespace Thuthuka_Construction.Models
         public CustomerProject customerProject { get; set; }
         public string CurrentPhase { get; set; } 
 
-        public DateOnly UpdateDate { get; set; }  
+        public DateOnly UpdateDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     }
 
 }

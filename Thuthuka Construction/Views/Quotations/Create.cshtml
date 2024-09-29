@@ -1,0 +1,65 @@
+﻿@model Thuthuka_Construction.Models.Quotation
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-primary text-white">
+        <h2 class="text-center mb-0">Create Quotation</h2>
+    </div>
+    <div class="card-body p-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-floating py-2 col-12">
+                <input asp-for="CreatedDate" class="form-control border-0 shadow" />
+                <label asp-for="CreatedDate" class="ms-2">Created Date</label>
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating py-2 col-12">
+                <input asp-for="TotalCost" class="form-control border-0 shadow" />
+                <label asp-for="TotalCost" class="ms-2">Total Cost</label>
+                <span asp-validation-for="TotalCost" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating py-2 col-12">
+                <input asp-for="Status" class="form-control border-0 shadow" />
+                <label asp-for="Status" class="ms-2">Status</label>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating py-2 col-12">
+                <select asp-for="CustomerProjectId" class="form-select border-0 shadow" asp-items="ViewBag.CustomerProjectId">
+                    <option disabled selected>--Select Customer Project--</option>
+                </select>
+                <label asp-for="CustomerProjectId" class="ms-2">Customer Project</label>
+                <span asp-validation-for="CustomerProjectId" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating py-2 col-12">
+                <select asp-for="QuotationResourceId" class="form-select border-0 shadow" asp-items="ViewBag.QuotationResourceId">
+                    <option disabled selected>--Select Resource--</option>
+                </select>
+                <label asp-for="QuotationResourceId" class="ms-2">Resource</label>
+                <span asp-validation-for="QuotationResourceId" class="text-danger"></span>
+            </div>
+
+            <div class="row pt-2">
+                <div class="col-6 col-md-3">
+                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

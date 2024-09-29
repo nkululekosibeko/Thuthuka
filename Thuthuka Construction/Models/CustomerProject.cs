@@ -24,7 +24,7 @@ namespace Thuthuka_Construction.Models
         [ValidateNever]
         public Project Project { get; set; }
 
-        public DateOnly SelectDate { get; set; }
+        public DateOnly CreatedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         public string Status { get; set; } = " pendind quatation";
     }

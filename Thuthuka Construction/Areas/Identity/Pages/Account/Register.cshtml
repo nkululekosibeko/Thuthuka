@@ -54,8 +54,10 @@
                     </div>
 
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Input.Provice" class="form-control" placeholder="State" />
-                        <label asp-for="Input.Provice" class="ms-2 text-muted">State</label>
+                        <select asp-for="Input.Provice" asp-items="@Model.Input.ProvinceList" class="form-select">
+                            <option disabled selected>-Select Province-</option>
+                        </select>
+                        <label asp-for="Input.Provice" class="ms-2 text-muted">Province</label>
                         <span asp-validation-for="Input.Provice" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-3 col-md-6">

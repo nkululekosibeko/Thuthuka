@@ -107,6 +107,7 @@ namespace Thuthuka_Construction.Areas.Identity.Pages.Account
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
+            public IEnumerable<SelectListItem> ProvinceList { get; set; }
 
             [Required]
             public string FirstName { get; set; }
@@ -114,7 +115,9 @@ namespace Thuthuka_Construction.Areas.Identity.Pages.Account
             public string? StreetAddress { get; set; }
             public string? City { get; set; }
             public string? Provice { get; set; }
+            [StringLength(4, MinimumLength = 4, ErrorMessage = "Postal Code must be exactly 4 characters long.")]
             public string? PostalCode { get; set; }
+            [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone number must be exactly 10 characters long.")]
             public string? PhoneNumber { get; set; }
         }
 
@@ -125,7 +128,6 @@ namespace Thuthuka_Construction.Areas.Identity.Pages.Account
             {
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Foreman)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
             }
 
             Input = new()
@@ -134,7 +136,20 @@ namespace Thuthuka_Construction.Areas.Identity.Pages.Account
                 {
                     Text = i,
                     Value = i
-                })
+                }),
+                ProvinceList = new List<SelectListItem>
+                {
+                    new SelectListItem { Value = "Eastern Cape", Text = "Eastern Cape" },
+                    new SelectListItem { Value = "Free State", Text = "Free State" },
+                    new SelectListItem { Value = "Gauteng", Text = "Gauteng" },
+                    new SelectListItem { Value = "KwaZulu-Natal", Text = "KwaZulu-Natal" },
+                    new SelectListItem { Value = "Limpopo", Text = "Limpopo" },
+                    new SelectListItem { Value = "Mpumalanga", Text = "Mpumalanga" },
+                    new SelectListItem { Value = "Northern Cape", Text = "Northern Cape" },
+                    new SelectListItem { Value = "North West", Text = "North West" },
+                    new SelectListItem { Value = "Western Cape", Text = "Western Cape" }
+                }
+
             };
 
             ReturnUrl = returnUrl;

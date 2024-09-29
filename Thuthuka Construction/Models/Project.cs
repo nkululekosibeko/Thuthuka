@@ -8,11 +8,9 @@ namespace Thuthuka_Construction.Models
     {
         [Key]
         public int ProjectId { get; set; }
+        [Required]
         public string ProjectName { get; set; }
         public string Description { get; set; }
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
-        public string Status { get; set; } = " On Progress";
 
         [Display(Name = "ProjectType Id")]
 

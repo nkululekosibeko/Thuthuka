@@ -237,15 +237,15 @@ namespace Thuthuka_Construction.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerProjectId"));
 
+                    b.Property<DateOnly>("CreatedDate")
+                        .HasColumnType("date");
+
                     b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
-
-                    b.Property<DateOnly>("SelectDate")
-                        .HasColumnType("date");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -297,9 +297,6 @@ namespace Thuthuka_Construction.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("EndDate")
-                        .HasColumnType("date");
-
                     b.Property<string>("ForemanId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -310,13 +307,6 @@ namespace Thuthuka_Construction.Migrations
 
                     b.Property<int>("ProjectTypeId")
                         .HasColumnType("int");
-
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProjectId");
 
@@ -344,27 +334,22 @@ namespace Thuthuka_Construction.Migrations
                     b.ToTable("projectTypes");
                 });
 
-            modelBuilder.Entity("Thuthuka_Construction.Models.Quatation", b =>
+            modelBuilder.Entity("Thuthuka_Construction.Models.Quotation", b =>
                 {
-                    b.Property<int>("QuatationId")
+                    b.Property<int>("QuotationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuatationId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuotationId"));
+
+                    b.Property<DateOnly>("CreatedDate")
+                        .HasColumnType("date");
 
                     b.Property<int>("CustomerProjectId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("DateCreated")
-                        .HasColumnType("date");
-
-                    b.Property<string>("ForemanId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Resources")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("QuotationResourceId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -373,13 +358,59 @@ namespace Thuthuka_Construction.Migrations
                     b.Property<double>("TotalCost")
                         .HasColumnType("float");
 
-                    b.HasKey("QuatationId");
+                    b.HasKey("QuotationId");
 
                     b.HasIndex("CustomerProjectId");
 
-                    b.HasIndex("ForemanId");
+                    b.HasIndex("QuotationResourceId");
 
-                    b.ToTable("quatations");
+                    b.ToTable("quotations");
+                });
+
+            modelBuilder.Entity("Thuthuka_Construction.Models.QuotationResource", b =>
+                {
+                    b.Property<int>("QuotationResourceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuotationResourceId"));
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuotationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResourceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("QuotationResourceId");
+
+                    b.HasIndex("QuotationId");
+
+                    b.HasIndex("ResourceId");
+
+                    b.ToTable("quotationResources");
+                });
+
+            modelBuilder.Entity("Thuthuka_Construction.Models.Resource", b =>
+                {
+                    b.Property<int>("ResourceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResourceId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PricePerUnit")
+                        .HasColumnType("float");
+
+                    b.HasKey("ResourceId");
+
+                    b.ToTable("resources");
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.ApplicationUser", b =>
@@ -509,23 +540,42 @@ namespace Thuthuka_Construction.Migrations
                     b.Navigation("ProjectType");
                 });
 
-            modelBuilder.Entity("Thuthuka_Construction.Models.Quatation", b =>
+            modelBuilder.Entity("Thuthuka_Construction.Models.Quotation", b =>
                 {
-                    b.HasOne("Thuthuka_Construction.Models.CustomerProject", "customerProject")
+                    b.HasOne("Thuthuka_Construction.Models.CustomerProject", "CustomerProject")
                         .WithMany()
                         .HasForeignKey("CustomerProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Thuthuka_Construction.Models.ApplicationUser", "Foreman")
+                    b.HasOne("Thuthuka_Construction.Models.QuotationResource", "QuotationResource")
                         .WithMany()
-                        .HasForeignKey("ForemanId")
+                        .HasForeignKey("QuotationResourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Foreman");
+                    b.Navigation("CustomerProject");
 
-                    b.Navigation("customerProject");
+                    b.Navigation("QuotationResource");
+                });
+
+            modelBuilder.Entity("Thuthuka_Construction.Models.QuotationResource", b =>
+                {
+                    b.HasOne("Thuthuka_Construction.Models.Quotation", "Quotation")
+                        .WithMany()
+                        .HasForeignKey("QuotationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Thuthuka_Construction.Models.Resource", "Resource")
+                        .WithMany()
+                        .HasForeignKey("ResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quotation");
+
+                    b.Navigation("Resource");
                 });
 #pragma warning restore 612, 618
         }

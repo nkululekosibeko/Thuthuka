@@ -1,88 +1,49 @@
 ﻿@model Thuthuka_Construction.Models.Project
 
 @{
-    ViewData["Title"] = "Edit Project";
+    ViewData["Title"] = "Edit";
 }
 
-<div class="card shadow border-0 my-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Edit Project</h2>
-            </div>
-        </div>
-    </div>
+<h1>Edit</h1>
 
-    <div class="card-body p-4">
-        <form asp-action="Edit" class="row">
+<h4>Project</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProjectId" />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="border p-3">
-
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="ProjectName" class="form-control border-0 shadow" />
-                            <label asp-for="ProjectName" class="ms-2">Project Name</label>
-                            <span asp-validation-for="ProjectName" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="Description" class="form-control border-0 shadow" />
-                            <label asp-for="Description" class="ms-2">Description</label>
-                            <span asp-validation-for="Description" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="StartDate" class="form-control border-0 shadow" />
-                            <label asp-for="StartDate" class="ms-2">Start Date</label>
-                            <span asp-validation-for="StartDate" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="EndDate" class="form-control border-0 shadow" />
-                            <label asp-for="EndDate" class="ms-2">End Date</label>
-                            <span asp-validation-for="EndDate" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating py-2 col-12">
-                            <select asp-for="ProjectTypeId" class="form-select border-0 shadow" asp-items="ViewBag.ProjectTypeId">
-                                <option disabled selected>--Select Project Type--</option>
-                            </select>
-                            <label asp-for="ProjectTypeId" class="ms-2">Project Type</label>
-                            <span asp-validation-for="ProjectTypeId" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <select asp-for="ForemanId" class="form-select border-0 shadow" asp-items="ViewBag.ForemanId">
-                                <option disabled selected>--Select Foreman--</option>
-                            </select>
-                            <label asp-for="ForemanId" class="ms-2">Foreman</label>
-                            <span asp-validation-for="ForemanId" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="Status" class="form-control border-0 shadow" />
-                            <label asp-for="Status" class="ms-2">Status</label>
-                            <span asp-validation-for="Status" class="text-danger"></span>
-                        </div>
-
-                        <div class="row pt-2">
-                            <div class="col-6 col-md-3">
-                                <button type="submit" class="btn btn-primary form-control">Save</button>
-                            </div>
-                            <div class="col-6 col-md-3">
-                                <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div class="form-group">
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectTypeId" class="control-label"></label>
+                <select asp-for="ProjectTypeId" class="form-control" asp-items="ViewBag.ProjectTypeId"></select>
+                <span asp-validation-for="ProjectTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ForemanId" class="control-label"></label>
+                <select asp-for="ForemanId" class="form-control" asp-items="ViewBag.ForemanId"></select>
+                <span asp-validation-for="ForemanId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

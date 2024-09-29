@@ -1,0 +1,118 @@
+﻿@* @model Thuthuka_Construction.Models.Project
+
+@{
+    ViewData["Title"] = "Project Details";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Project Details</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </dt>
+            <dd class="col-sm-9">
+                <div class="form-floating">
+                    <input class="form-control border-0 shadow" value="@Model.ProjectName" readonly />
+                    <label>@Html.DisplayNameFor(model => model.ProjectName)</label>
+                </div>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-9">
+                <div class="form-floating">
+                    <input class="form-control border-0 shadow" value="@Model.Description" readonly />
+                    <label>@Html.DisplayNameFor(model => model.Description)</label>
+                </div>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+            <dd class="col-sm-9">
+                <div class="form-floating">
+                    <input class="form-control border-0 shadow" value="@Model.StartDate.ToString("yyyy-MM-dd")" readonly />
+                    <label>@Html.DisplayNameFor(model => model.StartDate)</label>
+                </div>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+            <dd class="col-sm-9">
+                <div class="form-floating">
+                    <input class="form-control border-0 shadow" value="@Model.EndDate.ToString("yyyy-MM-dd")" readonly />
+                    <label>@Html.DisplayNameFor(model => model.EndDate)</label>
+                </div>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+            <dd class="col-sm-9">
+                <div class="form-floating">
+                    <input class="form-control border-0 shadow" value="@Model.Status" readonly />
+                    <label>@Html.DisplayNameFor(model => model.Status)</label>
+                </div>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.ProjectType.ProjectTypeId)
+            </dt>
+            <dd class="col-sm-9">
+                <div class="form-floating">
+                    <input class="form-control border-0 shadow" value="@Model.ProjectType.ProjectTypeId" readonly />
+                    <label>@Html.DisplayNameFor(model => model.ProjectType.ProjectTypeId)</label>
+                </div>
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Foreman.Id)
+            </dt>
+            <dd class="col-sm-9">
+                <div class="form-floating">
+                    <input class="form-control border-0 shadow" value="@Model.Foreman.Id" readonly />
+                    <label>@Html.DisplayNameFor(model => model.Foreman.Id)</label>
+                </div>
+            </dd>
+        </dl>
+
+        @if (User.IsInRole(SD.Role_Admin))
+        {
+            <div class="row pt-4">
+                <div class="col-6 col-md-3">
+                    <a asp-action="Edit" asp-route-id="@Model?.ProjectId" class="btn btn-primary form-control">Edit</a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row pt-4">
+                <div class="col-6 col-md-3">
+                    <a class="btn btn-primary form-control" asp-controller="Projects" asp-action="BuildCustomerProject" asp-route-projectId="@Model.ProjectId">Build Yours</a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-controller="Projects" asp-action="ListByCategory" asp-route-categoryId="4" class="btn btn-outline-primary border form-control">Back to Projects</a>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} *@
