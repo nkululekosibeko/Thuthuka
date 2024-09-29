@@ -65,6 +65,7 @@ namespace Thuthuka_Construction.Controllers
             {
                 _context.Add(quotationResource);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Quatation Resource Created Successfully";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["QuotationId"] = new SelectList(_context.quotations, "QuotationId", "QuotationId", quotationResource.QuotationId);
@@ -108,6 +109,7 @@ namespace Thuthuka_Construction.Controllers
                 {
                     _context.Update(quotationResource);
                     await _context.SaveChangesAsync();
+                    TempData["success"] = "Quatation Resource Details Updated Successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,6 +161,7 @@ namespace Thuthuka_Construction.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["success"] = "Quatation Resource Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 

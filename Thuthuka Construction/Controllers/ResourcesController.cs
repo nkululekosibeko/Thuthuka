@@ -60,6 +60,7 @@ namespace Thuthuka_Construction.Controllers
             {
                 _context.Add(resource);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Resource Created Successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(resource);
@@ -99,6 +100,8 @@ namespace Thuthuka_Construction.Controllers
                 {
                     _context.Update(resource);
                     await _context.SaveChangesAsync();
+                    TempData["success"] = "Resource Details Updated Successfully";
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -146,6 +149,7 @@ namespace Thuthuka_Construction.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["success"] = "Resource Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 

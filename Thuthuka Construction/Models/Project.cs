@@ -11,6 +11,8 @@ namespace Thuthuka_Construction.Models
         [Required]
         public string ProjectName { get; set; }
         public string Description { get; set; }
+        [ValidateNever]
+        public string ImageUrl { get; set; }
 
         [Display(Name = "ProjectType Id")]
 

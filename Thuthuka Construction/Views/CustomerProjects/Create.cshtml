@@ -1,4 +1,4 @@
-﻿@* @model Thuthuka_Construction.Models.CustomerProject
+﻿@model Thuthuka_Construction.Models.CustomerProject
 
 <div class="card shadow border-0 my-4">
     <div class="card-header bg-success bg-gradient ml-0 py-3">
@@ -10,7 +10,7 @@
     </div>
 
     <div class="card-body p-4">
-        <form asp-action="Create" class="row">
+        <form asp-action="Create" class="row" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="row">
@@ -63,4 +63,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
- *@
