@@ -51,7 +51,7 @@ namespace Thuthuka_Construction.Controllers
         }
 
         //GET: Projects/Create
-                public IActionResult Create()
+        public IActionResult Create()
         {
             // Filter only users with Foreman role and populate the dropdown list
             var foremanRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Foreman")?.Id;
@@ -81,32 +81,32 @@ namespace Thuthuka_Construction.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName,Description,ProjectTypeId,ForemanId")] Project project, IFormFile file)
+        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName,Description,ProjectTypeId,ForemanId")] Project project/*, IFormFile file*/)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (file != null)
-                {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string projectImagePath = Path.Combine(wwwRootPath, @"files\projectIMG");
+                //string wwwRootPath = _webHostEnvironment.WebRootPath;
+                //if (file != null)
+                //{
+                //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                //    string projectImagePath = Path.Combine(wwwRootPath, @"files\projectIMG");
 
-                    if (!string.IsNullOrEmpty(project.ImageUrl))
-                    {
-                        var oldImagePath = Path.Combine(wwwRootPath, project.ImageUrl.TrimStart('\\'));
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-                    }
+                //    if (!string.IsNullOrEmpty(project.ImageUrl))
+                //    {
+                //        var oldImagePath = Path.Combine(wwwRootPath, project.ImageUrl.TrimStart('\\'));
+                //        if (System.IO.File.Exists(oldImagePath))
+                //        {
+                //            System.IO.File.Delete(oldImagePath);
+                //        }
+                //    }
 
-                    using (var fileStream = new FileStream(Path.Combine(projectImagePath, fileName), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
+                //    using (var fileStream = new FileStream(Path.Combine(projectImagePath, fileName), FileMode.Create))
+                //    {
+                //        file.CopyTo(fileStream);
+                //    }
 
-                    project.ImageUrl = @"files\projectIMG\" + fileName;
-                }
+                //    project.ImageUrl = @"files\projectIMG\" + fileName;
+                //}
 
                 _context.Add(project);
                 await _context.SaveChangesAsync();
@@ -226,31 +226,9 @@ namespace Thuthuka_Construction.Controllers
         }
 
 
-
-        // GET: Projects/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var project = await _context.projects.FindAsync(id);
-        //    if (project == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["ForemanId"] = new SelectList(_context.applicationUsers, "Id", "Id", project.ForemanId);
-        //    ViewData["ProjectTypeId"] = new SelectList(_context.projectTypes, "ProjectTypeId", "ProjectTypeName", project.ProjectTypeId);
-        //    return View(project);
-        //}
-
-        // POST: Projects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProjectId,ProjectName,Description,ProjectTypeId,ForemanId")] Project project, IFormFile file)
+        public async Task<IActionResult> Edit(int id, [Bind("ProjectId,ProjectName,Description,ProjectTypeId,ForemanId")] Project project /*IFormFile file*/)
         {
             if (id != project.ProjectId)
             {
@@ -261,39 +239,39 @@ namespace Thuthuka_Construction.Controllers
             {
                 try
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    if (file != null)
-                    {
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                        string projectImagePath = Path.Combine(wwwRootPath, @"files\projectIMG");
+                    //string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    //if (file != null)
+                    //{
+                    //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    //    string projectImagePath = Path.Combine(wwwRootPath, @"files\projectIMG");
 
 
-                        if (!string.IsNullOrEmpty(project.ImageUrl))
-                        {
-                            var oldImagePath = Path.Combine(wwwRootPath, project.ImageUrl.TrimStart('\\'));
-                            if (System.IO.File.Exists(oldImagePath))
-                            {
-                                System.IO.File.Delete(oldImagePath);
-                            }
-                        }
+                    //    if (!string.IsNullOrEmpty(project.ImageUrl))
+                    //    {
+                    //        var oldImagePath = Path.Combine(wwwRootPath, project.ImageUrl.TrimStart('\\'));
+                    //        if (System.IO.File.Exists(oldImagePath))
+                    //        {
+                    //            System.IO.File.Delete(oldImagePath);
+                    //        }
+                    //    }
 
 
-                        if (!string.IsNullOrEmpty(project.ImageUrl))
-                        {
-                            var oldImagePath = Path.Combine(wwwRootPath, project.ImageUrl.TrimStart('\\'));
-                            if (System.IO.File.Exists(oldImagePath))
-                            {
-                                System.IO.File.Delete(oldImagePath);
-                            }
-                        }
+                    //    if (!string.IsNullOrEmpty(project.ImageUrl))
+                    //    {
+                    //        var oldImagePath = Path.Combine(wwwRootPath, project.ImageUrl.TrimStart('\\'));
+                    //        if (System.IO.File.Exists(oldImagePath))
+                    //        {
+                    //            System.IO.File.Delete(oldImagePath);
+                    //        }
+                    //    }
 
-                        using (var fileStream = new FileStream(Path.Combine(projectImagePath, fileName), FileMode.Create))
-                        {
-                            file.CopyTo(fileStream);
-                        }
+                    //    using (var fileStream = new FileStream(Path.Combine(projectImagePath, fileName), FileMode.Create))
+                    //    {
+                    //        file.CopyTo(fileStream);
+                    //    }
 
-                        project.ImageUrl = @"files\projectIMG\" + fileName;
-                    }
+                    //    project.ImageUrl = @"files\projectIMG\" + fileName;
+                    //}
                     _context.Update(project);
                     await _context.SaveChangesAsync();
                     TempData["success"] = "Project Details updated Successfully";

@@ -33,23 +33,34 @@
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.ProjectType.ProjectTypeName)
             </dd>
-            <dt class="col-sm-4">
+@*             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Foreman)
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Foreman.Id)
-            </dd>
+            </dd> *@
         </dl>
     </div>
 </div>
-
-<div class="mt-3">
-    <div class="row">
+@if (User.IsInRole(SD.Role_Foreman))
+{
+    <div class="row pt-4">
         <div class="col-6 col-md-3">
-            <a asp-action="Edit" asp-route-id="@Model?.ProjectId" class="btn btn-warning form-control">Edit</a>
+            <a asp-action="Edit" asp-route-id="@Model?.ProjectId" class="btn btn-primary form-control">Edit</a>
         </div>
         <div class="col-6 col-md-3">
             <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="row pt-4">
+        <div class="col-6 col-md-3">
+            <a class="btn btn-primary form-control" asp-controller="Projects" asp-action="BuildCustomerProject" asp-route-projectId="@Model.ProjectId">Build Yours</a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a asp-controller="Projects" asp-action="ListByCategory" asp-route-categoryId="4" class="btn btn-outline-primary border form-control">Back to Projects</a>
+        </div>
+    </div>
+}

@@ -35,12 +35,12 @@
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.CustomerProject.CustomerProjectId)
             </dd>
-            <dt class="col-sm-4">
+@*             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.QuotationResource)
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.QuotationResource.QuotationResourceId)
-            </dd>
+            </dd> *@
         </dl>
         <form asp-action="Delete">
             <input type="hidden" asp-for="QuotationId" />

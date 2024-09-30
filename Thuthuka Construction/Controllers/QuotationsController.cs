@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Thuthuka_Construction.DB;
 using Thuthuka_Construction.Models;
+using System.Linq;
 
 namespace Thuthuka_Construction.Controllers
 {
@@ -19,13 +16,18 @@ namespace Thuthuka_Construction.Controllers
             _context = context;
         }
 
-        // GET: Quotations
         public async Task<IActionResult> Index()
         {
-            var applicationDBContext = _context.quotations.Include(q => q.CustomerProject).Include(q => q.QuotationResource);
-            return View(await applicationDBContext.ToListAsync());
+            var quotations = await _context.quotations
+                .Include(q => q.CustomerProject) // Include CustomerProject data
+                .Include(q => q.QuotationResources) // Include QuotationResources
+                .ThenInclude(qr => qr.Resource) // Include Resource data for each QuotationResource
+                .ToListAsync();
+
+            return View(quotations);
         }
 
+        // GET: Quotations/Details/5
         // GET: Quotations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -34,10 +36,13 @@ namespace Thuthuka_Construction.Controllers
                 return NotFound();
             }
 
+            // Fetch the quotation with related data
             var quotation = await _context.quotations
-                .Include(q => q.CustomerProject)
-                .Include(q => q.QuotationResource)
+                .Include(q => q.CustomerProject) // Include CustomerProject data
+                .Include(q => q.QuotationResources) // Include QuotationResources
+                .ThenInclude(qr => qr.Resource) // Include Resource data for each QuotationResource
                 .FirstOrDefaultAsync(m => m.QuotationId == id);
+
             if (quotation == null)
             {
                 return NotFound();
@@ -46,33 +51,68 @@ namespace Thuthuka_Construction.Controllers
             return View(quotation);
         }
 
+
         // GET: Quotations/Create
         public IActionResult Create()
         {
+            var resources = _context.resources.ToList();
+            ViewBag.Resources = resources;
             ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId");
-            ViewData["QuotationResourceId"] = new SelectList(_context.quotationResources, "QuotationResourceId", "QuotationResourceId");
             return View();
         }
 
         // POST: Quotations/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuotationId,CreatedDate,TotalCost,Status,CustomerProjectId,QuotationResourceId")] Quotation quotation)
+        public async Task<IActionResult> Create(int customerProjectId, List<int> resourceIds, List<int> quantities)
         {
-            if (ModelState.IsValid)
+            if (resourceIds.Count != quantities.Count)
             {
-                _context.Add(quotation);
-                await _context.SaveChangesAsync();
-                TempData["success"] = "Quatation Created Successfully";
-                return RedirectToAction(nameof(Index));
+                return BadRequest("Resource selection and quantities do not match.");
             }
-            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", quotation.CustomerProjectId);
-            ViewData["QuotationResourceId"] = new SelectList(_context.quotationResources, "QuotationResourceId", "QuotationResourceId", quotation.QuotationResourceId);
-            return View(quotation);
+
+            // Create a new Quotation
+            var quotation = new Quotation
+            {
+                CreatedDate = DateOnly.FromDateTime(DateTime.Now),
+                Status = "Pending",
+                CustomerProjectId = customerProjectId,
+                QuotationResources = new List<QuotationResource>()
+            };
+
+            double totalCost = 0;
+
+            // Iterate through the selected resources and quantities to calculate the total cost
+            for (int i = 0; i < resourceIds.Count; i++)
+            {
+                var resource = await _context.resources.FindAsync(resourceIds[i]);
+                if (resource != null)
+                {
+                    var quantity = quantities[i];
+                    var cost = resource.PricePerUnit * quantity;
+                    totalCost += cost;
+
+                    // Add the selected resource and its quantity to the Quotation
+                    quotation.QuotationResources.Add(new QuotationResource
+                    {
+                        ResourceId = resourceIds[i],
+                        Quantity = quantity
+                    });
+                }
+            }
+
+            // Set the total cost of the quotation
+            quotation.TotalCost = totalCost;
+
+            // Save the quotation
+            _context.quotations.Add(quotation);
+            await _context.SaveChangesAsync();
+
+            TempData["success"] = "Quotation Created Successfully";
+            return RedirectToAction(nameof(Index));
         }
 
+        // GET: Quotations/Edit/5
         // GET: Quotations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -81,73 +121,83 @@ namespace Thuthuka_Construction.Controllers
                 return NotFound();
             }
 
-            var quotation = await _context.quotations.FindAsync(id);
+            var quotation = await _context.quotations
+                .Include(q => q.QuotationResources)
+                .ThenInclude(qr => qr.Resource)
+                .FirstOrDefaultAsync(q => q.QuotationId == id);
+
             if (quotation == null)
             {
                 return NotFound();
             }
-            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", quotation.CustomerProjectId);
-            ViewData["QuotationResourceId"] = new SelectList(_context.quotationResources, "QuotationResourceId", "QuotationResourceId", quotation.QuotationResourceId);
+
+            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "ProjectName");
+            ViewBag.Resources = await _context.resources.ToListAsync(); // Load all resources for the dropdown
+
             return View(quotation);
         }
 
         // POST: Quotations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("QuotationId,CreatedDate,TotalCost,Status,CustomerProjectId,QuotationResourceId")] Quotation quotation)
+        public async Task<IActionResult> Edit(int id, int customerProjectId, List<int> resourceIds, List<int> quantities)
         {
-            if (id != quotation.QuotationId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(quotation);
-                    await _context.SaveChangesAsync();
-                    TempData["success"] = "Quatation Details Updated Successfully";
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!QuotationExists(quotation.QuotationId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "CustomerProjectId", quotation.CustomerProjectId);
-            ViewData["QuotationResourceId"] = new SelectList(_context.quotationResources, "QuotationResourceId", "QuotationResourceId", quotation.QuotationResourceId);
-            return View(quotation);
-        }
-
-        // GET: Quotations/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var quotation = await _context.quotations
-                .Include(q => q.CustomerProject)
-                .Include(q => q.QuotationResource)
-                .FirstOrDefaultAsync(m => m.QuotationId == id);
+                .Include(q => q.QuotationResources)
+                .FirstOrDefaultAsync(q => q.QuotationId == id);
+
             if (quotation == null)
             {
                 return NotFound();
             }
 
-            return View(quotation);
+            if (resourceIds.Count != quantities.Count)
+            {
+                ModelState.AddModelError(string.Empty, "Resource selection and quantities do not match.");
+                ViewData["CustomerProjectId"] = new SelectList(_context.customerProjects, "CustomerProjectId", "ProjectName", quotation.CustomerProjectId);
+
+                ViewBag.Resources = await _context.resources.ToListAsync(); // Reload resources
+                return View(quotation);
+            }
+
+            // Update the quotation details
+            quotation.CustomerProjectId = customerProjectId;
+
+            // Clear existing resources
+            quotation.QuotationResources.Clear();
+
+            double totalCost = 0;
+
+            // Iterate through the selected resources and quantities
+            for (int i = 0; i < resourceIds.Count; i++)
+            {
+                var resource = await _context.resources.FindAsync(resourceIds[i]);
+                if (resource != null)
+                {
+                    var quantity = quantities[i];
+                    var cost = resource.PricePerUnit * quantity;
+                    totalCost += cost;
+
+                    // Add the updated resource and its quantity to the Quotation
+                    quotation.QuotationResources.Add(new QuotationResource
+                    {
+                        ResourceId = resourceIds[i],
+                        Quantity = quantity
+                    });
+                }
+            }
+
+            // Set the total cost of the quotation
+            quotation.TotalCost = totalCost;
+
+            // Save changes
+            _context.Update(quotation);
+            await _context.SaveChangesAsync();
+
+            TempData["success"] = "Quotation Updated Successfully";
+            return RedirectToAction(nameof(Index));
         }
+
 
         // POST: Quotations/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -158,16 +208,44 @@ namespace Thuthuka_Construction.Controllers
             if (quotation != null)
             {
                 _context.quotations.Remove(quotation);
+                await _context.SaveChangesAsync();
+                TempData["success"] = "Quotation Deleted Successfully";
             }
-
-            await _context.SaveChangesAsync();
-            TempData["success"] = "Quatation Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 
+        // Helper Method to Check if a Quotation Exists
         private bool QuotationExists(int id)
         {
             return _context.quotations.Any(e => e.QuotationId == id);
+        }
+
+        // Approve Quotation
+        [HttpPost]
+        public IActionResult ApproveQuotation(int quotationId)
+        {
+            var quotation = _context.quotations.Find(quotationId);
+            if (quotation != null)
+            {
+                quotation.Status = "Approved";
+                _context.SaveChanges();
+                TempData["success"] = "Quotation Approved";
+            }
+            return RedirectToAction("Details", new { id = quotationId });
+        }
+
+        // Decline Quotation
+        [HttpPost]
+        public IActionResult DeclineQuotation(int quotationId)
+        {
+            var quotation = _context.quotations.Find(quotationId);
+            if (quotation != null)
+            {
+                quotation.Status = "Declined";
+                _context.SaveChanges();
+                TempData["success"] = "Quotation Declined";
+            }
+            return RedirectToAction("Details", new { id = quotationId });
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿@model Thuthuka_Construction.Models.Quotation
 
-@{
-    ViewData["Title"] = "Edit";
-}
-
 <div class="card shadow border-0 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
@@ -14,30 +10,14 @@
     </div>
 
     <div class="card-body p-4">
-        <form asp-action="Edit" class="row">
+        <form asp-action="Edit" method="post" class="row">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="QuotationId" />
+            <input type="hidden" asp-for="CustomerProjectId" />
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="border p-3">
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="CreatedDate" class="form-control border-0 shadow" />
-                            <label asp-for="CreatedDate" class="ms-2">Created Date</label>
-                            <span asp-validation-for="CreatedDate" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="TotalCost" class="form-control border-0 shadow" />
-                            <label asp-for="TotalCost" class="ms-2">Total Cost</label>
-                            <span asp-validation-for="TotalCost" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="Status" class="form-control border-0 shadow" />
-                            <label asp-for="Status" class="ms-2">Status</label>
-                            <span asp-validation-for="Status" class="text-danger"></span>
-                        </div>
 
                         <div class="form-floating py-2 col-12">
                             <select asp-for="CustomerProjectId" class="form-select border-0 shadow" asp-items="ViewBag.CustomerProjectId">
@@ -47,13 +27,20 @@
                             <span asp-validation-for="CustomerProjectId" class="text-danger"></span>
                         </div>
 
-                        <div class="form-floating py-2 col-12">
-                            <select asp-for="QuotationResourceId" class="form-select border-0 shadow" asp-items="ViewBag.QuotationResourceId">
-                                <option disabled selected>--Select Resource--</option>
-                            </select>
-                            <label asp-for="QuotationResourceId" class="ms-2">Resource</label>
-                            <span asp-validation-for="QuotationResourceId" class="text-danger"></span>
-                        </div>
+
+                        <h4 class="py-3">Resources</h4>
+                        @foreach (var resource in Model.QuotationResources)
+                        {
+                            <div class="row py-2">
+                                <div class="col-6">
+                                    <input type="checkbox" name="resourceIds" value="@resource.ResourceId" checked />
+                                    <label>@resource.Resource.Name (@resource.Resource.PricePerUnit.ToString("C") per unit)</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" name="quantities" class="form-control border-0 shadow" min="1" value="@resource.Quantity" />
+                                </div>
+                            </div>
+                        }
 
                         <div class="row pt-2">
                             <div class="col-6 col-md-3">
@@ -71,7 +58,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

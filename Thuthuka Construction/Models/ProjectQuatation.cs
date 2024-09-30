@@ -41,11 +41,8 @@ namespace Thuthuka_Construction.Models
         [ValidateNever]
         public CustomerProject CustomerProject { get; set; }
 
-        public int QuotationResourceId { get; set; }
-
-        [ForeignKey("QuotationResourceId")]
-        [ValidateNever]
-        public QuotationResource QuotationResource { get; set; }
+        // Navigation Property: A quotation can have multiple resources (QuotationResource)
+        public ICollection<QuotationResource> QuotationResources { get; set; } // List of resources
 
     }
 

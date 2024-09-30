@@ -1,17 +1,14 @@
 ﻿@model Thuthuka_Construction.Models.Quotation
 
-@{
-    ViewData["Title"] = "Create";
-}
-
 <div class="card shadow border-0 my-4">
-    <div class="card-header bg-primary text-white">
+    <div class="card-header bg-primary bg-secondary bg-gradient ml-0 py-3 text-white">
         <h2 class="text-center mb-0">Create Quotation</h2>
     </div>
     <div class="card-body p-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
+            <!-- Customer Project Selection -->
             <div class="form-floating py-2 col-12">
                 <select asp-for="CustomerProjectId" class="form-select border-0 shadow" asp-items="ViewBag.CustomerProjectId">
                     <option disabled selected>--Select Customer Project--</option>
@@ -20,28 +17,25 @@
                 <span asp-validation-for="CustomerProjectId" class="text-danger"></span>
             </div>
 
-            <div class="form-floating py-2 col-12">
-                <select asp-for="QuotationResourceId" class="form-select border-0 shadow" asp-items="ViewBag.QuotationResourceId">
-                    <option disabled selected>--Select Resource--</option>
-                </select>
-                <label asp-for="QuotationResourceId" class="ms-2">Resource</label>
-                <span asp-validation-for="QuotationResourceId" class="text-danger"></span>
-            </div>
+            <!-- Resource Selection and Quantity Input -->
+            <h4 class="py-3">Select Resources</h4>
+            @foreach (var resource in ViewBag.Resources)
+            {
+                <div class="row py-2">
+                    <div class="col-6">
+                        <input type="checkbox" name="resourceIds" value="@resource.ResourceId" />
+                        <label>@resource.Name (@resource.PricePerUnit.ToString("C") per unit)</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" name="quantities" class="form-control border-0 shadow" min="1" placeholder="Quantity" />
+                    </div>
+                </div>
+            }
 
-            <div class="form-floating py-2 col-12">
-                <input asp-for="TotalCost" class="form-control border-0 shadow" />
-                <label asp-for="TotalCost" class="ms-2">Total Cost</label>
-                <span asp-validation-for="TotalCost" class="text-danger"></span>
-            </div>
+            <!-- Status (Hidden field since it is always "Pending" initially) -->
+            <input type="hidden" asp-for="Status" value="Pending" />
 
-            <div class="form-floating py-2 col-12">
-                <input asp-for="Status" class="form-control border-0 shadow" />
-                <label asp-for="Status" class="ms-2">Status</label>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-
-
-
+            <!-- Submit and Back Buttons -->
             <div class="row pt-2">
                 <div class="col-6 col-md-3">
                     <button type="submit" class="btn btn-primary form-control">Create</button>
@@ -55,7 +49,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

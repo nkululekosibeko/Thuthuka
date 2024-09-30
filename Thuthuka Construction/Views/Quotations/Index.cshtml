@@ -37,7 +37,7 @@
                             <p class="card-text">@item.CreatedDate.ToShortDateString()</p>
 
                             <h6 class="card-title">Total Cost</h6>
-                            <p class="card-text">@item.TotalCost</p>
+                            <p class="card-text">@item.TotalCost.ToString("C")</p>
 
                             <h6 class="card-title">Status</h6>
                             <p class="card-text">@item.Status</p>
@@ -45,8 +45,13 @@
                             <h6 class="card-title">Customer Project</h6>
                             <p class="card-text">Customer Project ID: @item.CustomerProject.CustomerProjectId</p>
 
-                            <h6 class="card-title">Resource</h6>
-                            <p class="card-text">Resource ID: @item.QuotationResource.QuotationResourceId</p>
+                            <h6 class="card-title">Resources</h6>
+                            <ul>
+                                @foreach (var resource in item.QuotationResources)
+                                {
+                                    <li>@resource.Resource.Name (Quantity: @resource.Quantity, Unit Price: @resource.Resource.PricePerUnit.ToString("C"))</li>
+                                }
+                            </ul>
                         </div>
                         <div class="card-footer text-center">
                             <a asp-action="Edit" asp-route-id="@item.QuotationId" class="btn btn-sm btn-warning">Edit</a>

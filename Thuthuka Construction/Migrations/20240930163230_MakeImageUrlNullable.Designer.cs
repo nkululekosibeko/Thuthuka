@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Thuthuka_Construction.DB;
 
@@ -11,9 +12,11 @@ using Thuthuka_Construction.DB;
 namespace Thuthuka_Construction.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240930163230_MakeImageUrlNullable")]
+    partial class MakeImageUrlNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,6 +354,9 @@ namespace Thuthuka_Construction.Migrations
                     b.Property<int>("CustomerProjectId")
                         .HasColumnType("int");
 
+                    b.Property<int>("QuotationResourceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -361,6 +367,8 @@ namespace Thuthuka_Construction.Migrations
                     b.HasKey("QuotationId");
 
                     b.HasIndex("CustomerProjectId");
+
+                    b.HasIndex("QuotationResourceId");
 
                     b.ToTable("quotations");
                 });
@@ -546,13 +554,21 @@ namespace Thuthuka_Construction.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Thuthuka_Construction.Models.QuotationResource", "QuotationResource")
+                        .WithMany()
+                        .HasForeignKey("QuotationResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CustomerProject");
+
+                    b.Navigation("QuotationResource");
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.QuotationResource", b =>
                 {
                     b.HasOne("Thuthuka_Construction.Models.Quotation", "Quotation")
-                        .WithMany("QuotationResources")
+                        .WithMany()
                         .HasForeignKey("QuotationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -566,11 +582,6 @@ namespace Thuthuka_Construction.Migrations
                     b.Navigation("Quotation");
 
                     b.Navigation("Resource");
-                });
-
-            modelBuilder.Entity("Thuthuka_Construction.Models.Quotation", b =>
-                {
-                    b.Navigation("QuotationResources");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,7 +5,7 @@
 }
 
 <div class="card shadow border-0 my-4">
-    <div class="card-header bg-primary text-white">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3 text-white">
         <h2 class="text-center mb-0">Create Project</h2>
     </div>
     <div class="row"> 
@@ -41,11 +41,11 @@
                         <label asp-for="ForemanId" class="ms-2">Foreman</label>
                         <span asp-validation-for="ForemanId" class="text-danger"></span>
                     </div>
-
+@* 
                     <div class="form-floating py-2 col-12">
                         <input type="file" name="file" class="form-control border-0 shadow" />
                         <label asp-for="ImageUrl" class="ms-2"></label>
-                    </div>
+                    </div> *@
 
                     <div class="row pt-2">
                         <div class="col-6 col-md-3">
@@ -60,8 +60,8 @@
 
         </div>
         <div class="col-2">
-            <img src="@Model.ImageUrl" width="100%"
-                 style="border-radius:5px; border:1px solid #bbb9b9" alt="Project Image" />
+@*             <img src="@Model.ImageUrl" width="100"
+                 style="border-radius:5px; border:1px solid #bbb9b9" alt="Project Image" /> *@
         </div>
     </div>
 </div>
