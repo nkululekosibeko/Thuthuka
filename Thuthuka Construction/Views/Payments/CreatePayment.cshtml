@@ -10,6 +10,8 @@
                 <form asp-action="ProcessPayment" method="post" enctype="multipart/form-data">
                     <input type="hidden" asp-for="CustomerId" />
                     <input type="hidden" asp-for="CustomerProjectId" />
+                    <input type="hidden" asp-for="Amount" />
+                    <input type="hidden" asp-for="PaymentId" />
 
                     <div class="form-floating py-2 col-12">
                         <p class="form-control border-0 shadow bg-light">@Model.Amount.ToString("C")</p>
@@ -26,7 +28,6 @@
                     </div>
 
                     <!-- Credit Card Information -->
-                    <!-- Credit Card Information -->
                     <div class="form-floating py-2 col-12">
                         <input type="text" id="CardNumber" name="CardNumber" class="form-control border-0 shadow" placeholder="Enter your card number" required maxlength="16" pattern="\d{16}" title="Card number must be 16 digits" />
                         <label for="CardNumber" class="ms-2">Card Number</label>
@@ -40,17 +41,17 @@
                         </div>
 
                         <div class="form-floating py-2 col-md-6">
-                            <input type="text" id="CVV" name="CVV" class="form-control border-0 shadow" placeholder="3-digit security code" required maxlength="4" pattern="\d{3,4}" title="CVV must be 3 or 4 digits" />
+                            <input type="text" id="CVV" name="CVV" class="form-control border-0 shadow" placeholder="3-digit security code" required maxlength="4" pattern="\d{3,4}" title="CVV must be 3 digits" />
                             <label for="CVV" class="ms-2">CVV</label>
                         </div>
 
                     </div>
 
                     <!-- Billing Information -->
-                    <div class="form-floating py-2 col-12">
+@*                     <div class="form-floating py-2 col-12">
                         <input type="text" id="BillingAddress" name="BillingAddress" class="form-control border-0 shadow" placeholder="Street Address" required maxlength="100" title="Billing Address is required and cannot exceed 100 characters" />
                         <label for="BillingAddress" class="ms-2">Billing Address</label>
-                    </div>
+                    </div> *@
 
 
                     <div class="row pt-2">

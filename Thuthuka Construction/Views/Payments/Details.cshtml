@@ -1,54 +1,78 @@
 ﻿@model Thuthuka_Construction.Models.Payment
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Payment Details";
 }
 
-<h1>Details</h1>
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Payment Details</h2>
+            </div>
+        </div>
+    </div>
 
-<div>
-    <h4>Payment</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PaymentType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PaymentType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PaymentDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PaymentDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerProject)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerProject.CustomerProjectId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-    </dl>
+    <div class="card-body p-4">
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.PaymentType)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.PaymentType)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Amount)
+            </dt>
+            <dd class="col-sm-8">
+                @Model.Amount.ToString("C") <!-- Formatting amount as currency -->
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.PaymentDate)
+            </dt>
+            <dd class="col-sm-8">
+                @Model.PaymentDate.ToShortDateString() <!-- Formatting the date -->
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Customer)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Customer.Id)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.CustomerProject)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.CustomerProject.CustomerProjectId)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+        </dl>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.PaymentId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="mt-3">
+    <div class="row">
+@*         <div class="col-6 col-md-3">
+            <a asp-action="Edit" asp-route-id="@Model.PaymentId" class="btn btn-warning form-control">Edit</a>
+        </div> *@
+        <div class="col-6 col-md-3">
+            <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+  

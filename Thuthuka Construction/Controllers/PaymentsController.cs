@@ -193,15 +193,28 @@ namespace Thuthuka_Construction.Controllers
                     Amount = payment.Amount,
                     PaymentType = payment.PaymentType,
                     PaymentDate = DateOnly.FromDateTime(DateTime.Now),
-                    Status = "Completed"
+                    Status = "Payment Completed"
                 };
+                var _customerProject = await _context.customerProjects
+                    .FirstOrDefaultAsync(cp => cp.CustomerProjectId == payment.CustomerProjectId);
+
+                if (_customerProject != null)
+                {
+                    // Update the customer project status
+                    _customerProject.Status = "Payment Completed";
+                    _context.customerProjects.Update(_customerProject);
+                }
+
+
 
                 _context.payments.Add(_payment);
                 await _context.SaveChangesAsync();
 
+                int paymentId = _payment.PaymentId;
+
                 // Send confirmation or notification to customer and admin
                 // Redirect to a confirmation page
-                return RedirectToAction("PaymentConfirmation", new { paymentId = payment.PaymentId });
+                return RedirectToAction("PaymentConfirmation", new { paymentId = paymentId });
             }
 
             return View(payment);
