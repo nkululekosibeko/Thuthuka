@@ -1,0 +1,41 @@
+﻿@model Thuthuka_Construction.Models.Project
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-10 text-center">
+                <h2 class="text-white py-2">Project Details</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ProjectName)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+@*             <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ProjectType)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ProjectType.ProjectTypeName)
+            </dd> *@
+        </dl>
+
+        <!-- Go Back Button -->
+        <a href="@Url.Action("CustomerProjectProgress", "CustomerProjects")" class="btn btn-primary mt-3">Go Back to Project Progress</a>
+    </div>
+</div>

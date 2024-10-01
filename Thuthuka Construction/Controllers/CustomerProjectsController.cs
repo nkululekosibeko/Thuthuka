@@ -100,7 +100,6 @@ namespace Thuthuka_Construction.Controllers
             return View(customerProject);
         }
 
-        // GET: CustomerProjects/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             // Check for a valid ID
@@ -119,45 +118,47 @@ namespace Thuthuka_Construction.Controllers
             // Fetch all users with the "Customer" role
             var customerRoleId = _context.Roles.FirstOrDefault(r => r.Name == "Customer")?.Id;
             var customerIds = _context.UserRoles
-                                   .Where(ur => ur.RoleId == customerRoleId)
-                                   .Select(ur => ur.UserId).ToList();
+                                       .Where(ur => ur.RoleId == customerRoleId)
+                                       .Select(ur => ur.UserId).ToList();
 
             var CustomerUsers = _context.applicationUsers
-                                        .Where(u => customerIds.Contains(u.Id))
-                                        .Select(u => new { u.Id, u.UserName })
-                                        .ToList();
+                                         .Where(u => customerIds.Contains(u.Id))
+                                         .Select(u => new { u.Id, u.UserName })
+                                         .ToList();
 
             // Populate ViewData for dropdowns
             ViewData["CustomerId"] = new SelectList(CustomerUsers, "Id", "UserName", customerProject.CustomerId);
             ViewData["ProjectId"] = new SelectList(_context.projects, "ProjectId", "ProjectName", customerProject.ProjectId);
 
+            // Define possible statuses
+            var statuses = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Pending Quotation", Text = "Pending Quotation" },
+        new SelectListItem { Value = "In Progress", Text = "In Progress" },
+        new SelectListItem { Value = "Completed", Text = "Completed" },
+        new SelectListItem { Value = "On Hold", Text = "On Hold" },
+        new SelectListItem { Value = "Cancelled", Text = "Cancelled" }
+    };
+            ViewData["Status"] = new SelectList(statuses, "Value", "Text", customerProject.Status);
+
             return View(customerProject);
         }
-
 
         // POST: CustomerProjects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerProjectId,CustomerId,QuatationId,SelectDate,Status,ProjectId")] CustomerProject customerProject)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerProjectId,CustomerId,ProjectId,StartDate,Status,StatusReason")] CustomerProject customerProject)
         {
-            // Check if the ID in the form matches the one in the route
             if (id != customerProject.CustomerProjectId)
             {
                 return View("Error404");
             }
 
-            // Optional: Add validation for status updates or other fields if needed
-            // if (customerProject.Status == "InvalidStatus")
-            // {
-            //     ModelState.AddModelError("", "Invalid status provided.");
-            // }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    customerProject.CreatedDate = DateOnly.FromDateTime(DateTime.Now);
-                    // Update the customer project
+                    customerProject.CreatedDate = DateOnly.FromDateTime(DateTime.Now); // This may not be necessary to set here, based on your requirements.
                     _context.Update(customerProject);
                     await _context.SaveChangesAsync();
                     TempData["success"] = "Customer project updated successfully.";
@@ -181,8 +182,20 @@ namespace Thuthuka_Construction.Controllers
             ViewData["CustomerId"] = new SelectList(_context.applicationUsers, "Id", "UserName", customerProject.CustomerId);
             ViewData["ProjectId"] = new SelectList(_context.projects, "ProjectId", "ProjectName", customerProject.ProjectId);
 
+            // Repopulate Status dropdown
+            ViewData["Status"] = new SelectList(new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Pending Quotation", Text = "Pending Quotation" },
+        new SelectListItem { Value = "In Progress", Text = "In Progress" },
+        new SelectListItem { Value = "Completed", Text = "Completed" },
+        new SelectListItem { Value = "On Hold", Text = "On Hold" },
+        new SelectListItem { Value = "Cancelled", Text = "Cancelled" }
+    }, "Value", "Text", customerProject.Status);
+
             return View(customerProject);
         }
+
+
 
 
         // GET: CustomerProjects/Delete/5
@@ -271,5 +284,23 @@ namespace Thuthuka_Construction.Controllers
 
             return View(quotation);
         }
+
+        public async Task<IActionResult> ProjectDetails(int customerProjectId)
+        {
+            // Retrieve the CustomerProject that contains the project ID
+            var customerProject = await _context.customerProjects
+                .Include(cp => cp.Project) // Include the Project details
+                .FirstOrDefaultAsync(cp => cp.CustomerProjectId == customerProjectId);
+
+            // Check if the customer project exists
+            if (customerProject == null)
+            {
+                return NotFound(); // Return 404 if not found
+            }
+
+            // Pass the Project to the view
+            return View(customerProject.Project); // Return the related Project
+        }
+
     }
 }

@@ -67,14 +67,6 @@
         }
         else
         {
-            <form method="post" asp-controller="Quotations" asp-action="AcceptQuotation" asp-route-id="@Model.QuotationId" class="d-inline">
-                <button type="submit" class="btn btn-success">Accept Quotation</button>
-            </form>
-
-            <!-- Decline Quotation -->
-            <form method="post" asp-controller="Quotations" asp-action="DeclineQuotation" asp-route-id="@Model.QuotationId" class="d-inline">
-                <button type="submit" class="btn btn-danger">Decline Quotation</button>
-            </form>
 
             <a class="btn btn-primary mt-3" asp-area="" asp-controller="CustomerProjects" asp-action="CustomerProjectProgress">Back to Project List</a>
         }

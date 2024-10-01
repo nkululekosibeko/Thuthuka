@@ -39,12 +39,29 @@
                             <span asp-validation-for="ProjectId" class="text-danger"></span>
                         </div>
 
-
-                        <!-- Status Input -->
+                        <!-- Start Date Input -->
+                        <!-- Start Date Input -->
                         <div class="form-floating py-2 col-12">
-                            <input asp-for="Status" class="form-control border-0 shadow" />
+                            <input asp-for="StartDate" class="form-control border-0 shadow" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            <label asp-for="StartDate" class="ms-2">Start Date</label>
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+
+
+                        <!-- Status Dropdown -->
+                        <div class="form-floating py-2 col-12">
+                            <select asp-for="Status" class="form-select border-0 shadow" asp-items="ViewBag.Status">
+                                <option disabled selected>--Select Status--</option>
+                            </select>
                             <label asp-for="Status" class="ms-2">Status</label>
                             <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+
+                        <!-- Status Reason Input -->
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="StatusReason" class="form-control border-0 shadow" />
+                            <label asp-for="StatusReason" class="ms-2">Status Reason</label>
+                            <span asp-validation-for="StatusReason" class="text-danger"></span>
                         </div>
 
                         <!-- Buttons -->

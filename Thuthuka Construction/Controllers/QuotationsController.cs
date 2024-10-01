@@ -6,9 +6,11 @@ using Thuthuka_Construction.Models;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Thuthuka_Construction.Controllers
 {
+    [Authorize]
     public class QuotationsController : Controller
     {
         private readonly ApplicationDBContext _context;

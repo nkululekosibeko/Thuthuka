@@ -23,10 +23,12 @@ namespace Thuthuka_Construction.Models
         [ForeignKey("ProjectId")]
         [ValidateNever]
         public Project Project { get; set; }
+        public DateOnly? StartDate { get; set; }
 
         public DateOnly CreatedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
-        public string Status { get; set; } = " pendind quatation";
+        public string Status { get; set; } = "pendind quatation";
+        public string? StatusReason { get; set; }
     }
     
 }
