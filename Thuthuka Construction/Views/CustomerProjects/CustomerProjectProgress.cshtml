@@ -10,13 +10,16 @@
                     <div class="card shadow-sm h-100">
                         <div class="card-body">
                             <h5 class="card-title">Project: @Html.DisplayFor(modelItem => item.Project.ProjectName)</h5>
-                            <p class="card-text">Customer: @Html.DisplayFor(modelItem => item.Customer.FirstName) @Html.DisplayFor(modelItem => item.Customer.LastName)</p>
+                            <p class="card-text">Full Name: @Html.DisplayFor(modelItem => item.Customer.FirstName) @Html.DisplayFor(modelItem => item.Customer.LastName)</p>
                             <p class="card-text">City: @Html.DisplayFor(modelItem => item.Customer.City)</p>
                             <p class="card-text">Phone: @Html.DisplayFor(modelItem => item.Customer.PhoneNumber)</p>
                             <p class="card-text">Status: <span class="badge bg-info">@Html.DisplayFor(modelItem => item.Status)</span></p>
                         <p class="card-text">Date Selected: @Html.DisplayFor(modelItem => item.CreatedDate)</p>
                             <a href="@Url.Action("CustomerProjectQuotation", new { customerProjectId = item.CustomerProjectId })" class="btn btn-secondary btn-sm">
                                 View Quotation
+                            </a>
+                        <a href="@Url.Action("Details", new { customerProjectId = item.CustomerProjectId })" class="btn btn-secondary btn-sm">
+                                More Details
                             </a>
                         </div>
                     </div>

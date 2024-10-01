@@ -1,0 +1,74 @@
+﻿@model Thuthuka_Construction.Models.Payment
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3 text-white">
+        <h2 class="text-center mb-0">Make Payment for Project</h2>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-body p-4">
+                <form asp-action="ProcessPayment" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="CustomerId" />
+                    <input type="hidden" asp-for="CustomerProjectId" />
+
+                    <div class="form-floating py-2 col-12">
+                        <p class="form-control border-0 shadow bg-light">@Model.Amount.ToString("C")</p>
+                        <label>Total Amount Due</label>
+                    </div>
+
+                    <div class="form-floating py-2 col-12">
+                        <select asp-for="PaymentType" class="form-select border-0 shadow">
+                            <option disabled selected>--Select Payment Method--</option>
+                            <option value="CreditCard">Credit Card</option>
+                            <option value="BankTransfer">Bank Transfer</option>
+                        </select>
+                        <label asp-for="PaymentType" class="ms-2">Payment Method</label>
+                    </div>
+
+                    <!-- Credit Card Information -->
+                    <!-- Credit Card Information -->
+                    <div class="form-floating py-2 col-12">
+                        <input type="text" id="CardNumber" name="CardNumber" class="form-control border-0 shadow" placeholder="Enter your card number" required maxlength="16" pattern="\d{16}" title="Card number must be 16 digits" />
+                        <label for="CardNumber" class="ms-2">Card Number</label>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-floating py-2 col-md-6">
+                            <input type="text" id="ExpirationDate" name="ExpirationDate" class="form-control border-0 shadow" placeholder="MM/YY" required maxlength="4" pattern="^(0[1-9]|1[0-2])\/\d{2}$" title="Expiration date must be in MM/YY format" />
+                            <label for="ExpirationDate" class="ms-2">Expiration Date</label>
+                        </div>
+
+                        <div class="form-floating py-2 col-md-6">
+                            <input type="text" id="CVV" name="CVV" class="form-control border-0 shadow" placeholder="3-digit security code" required maxlength="4" pattern="\d{3,4}" title="CVV must be 3 or 4 digits" />
+                            <label for="CVV" class="ms-2">CVV</label>
+                        </div>
+
+                    </div>
+
+                    <!-- Billing Information -->
+                    <div class="form-floating py-2 col-12">
+                        <input type="text" id="BillingAddress" name="BillingAddress" class="form-control border-0 shadow" placeholder="Street Address" required maxlength="100" title="Billing Address is required and cannot exceed 100 characters" />
+                        <label for="BillingAddress" class="ms-2">Billing Address</label>
+                    </div>
+
+
+                    <div class="row pt-2">
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary form-control">Submit Payment</button>
+                        </div>
+@*                         <div class="col-6 col-md-3">
+                            <a asp-action="Index" class="btn btn-outline-primary border form-control">Back to List</a>
+                        </div> *@
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,18 @@
+﻿@model Thuthuka_Construction.Models.Payment
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Payment Confirmation</h2>
+    <input type="hidden" asp-for="PaymentId" />
+
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p>Thank you for your payment!</p>
+            <p>Payment ID: @Model.PaymentId</p>
+            <p>Amount Paid: @Model.Amount.ToString("C")</p>
+            <p>Payment Status: @Model.Status</p>
+        </div>
+    </div>
+
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-3">Back to Home</a>
+</div>

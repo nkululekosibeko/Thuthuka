@@ -19,7 +19,9 @@ namespace Thuthuka_Construction.DB
         public DbSet<ApplicationUser> applicationUsers { get; set; }
         public DbSet<Progress> progresses { get; set; }
         public DbSet<Resource> resources { get; set; }
+        public DbSet<Payment> payments { get; set; }
         public DbSet<QuotationResource> quotationResources { get; set; }
+        
 
     }
 }

@@ -256,20 +256,20 @@ namespace Thuthuka_Construction.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> CustomerProjectQuotation(int customerProjectId)
-        //{
-        //    var quotation = await _context.quotations
-        //        .Include(q => q.customerProject)
-        //        .Include(q => q.Foreman)
-        //        .FirstOrDefaultAsync(q => q.CustomerProjectId == customerProjectId);
+        public async Task<IActionResult> CustomerProjectQuotation(int customerProjectId)
+        {
+            var quotation = await _context.quotations
+                .Include(q => q.QuotationResources)
+                .ThenInclude(qr => qr.Resource)
+                .Include(q => q.CustomerProject)
+                .FirstOrDefaultAsync(q => q.CustomerProjectId == customerProjectId);
 
-        //    if (quotation == null)
-        //    {
-        //        return RedirectToAction("NoQuotation");
-        //    }
+            if (quotation == null)
+            {
+                return RedirectToAction("NoQuotation");
+            }
 
-        //    ViewBag.Project = quotation.customerProject.Project;
-        //    return View(quotation);
-        //}
+            return View(quotation);
+        }
     }
 }

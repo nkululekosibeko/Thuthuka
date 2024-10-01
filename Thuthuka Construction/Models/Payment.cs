@@ -18,6 +18,13 @@ namespace Thuthuka_Construction.Models
         [ValidateNever]
         public ApplicationUser Customer { get; set; }
 
+        [Display(Name = "Project Id")]
+        public int CustomerProjectId { get; set; }  // New field to link the project
+
+        [ForeignKey("CustomerProjectId")]
+        [ValidateNever]
+        public CustomerProject CustomerProject { get; set; }
+
         public string Status { get; set; } = "Pending";
 
     }

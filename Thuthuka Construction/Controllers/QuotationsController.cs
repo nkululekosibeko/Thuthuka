@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Thuthuka_Construction.DB;
 using Thuthuka_Construction.Models;
 using System.Linq;
+using Microsoft.CodeAnalysis;
+using System.Security.Claims;
 
 namespace Thuthuka_Construction.Controllers
 {
@@ -79,6 +81,12 @@ namespace Thuthuka_Construction.Controllers
                 CustomerProjectId = customerProjectId,
                 QuotationResources = new List<QuotationResource>()
             };
+
+
+            //var _customerProject = new CustomerProject
+            //{
+            //    Status = "quotation available"
+            //};
 
             double totalCost = 0;
 
@@ -220,32 +228,59 @@ namespace Thuthuka_Construction.Controllers
             return _context.quotations.Any(e => e.QuotationId == id);
         }
 
-        // Approve Quotation
         [HttpPost]
-        public IActionResult ApproveQuotation(int quotationId)
+        public async Task<IActionResult> AcceptQuotation(int id)
         {
-            var quotation = _context.quotations.Find(quotationId);
-            if (quotation != null)
+            // Log or set a breakpoint here to check the value of id
+            if (id == 0)
             {
-                quotation.Status = "Approved";
-                _context.SaveChanges();
-                TempData["success"] = "Quotation Approved";
+                return BadRequest("Invalid Quotation ID");
             }
-            return RedirectToAction("Details", new { id = quotationId });
+
+            var quotation = await _context.quotations.FindAsync(id);
+
+            if (quotation == null)
+            {
+                // Log or display an error message
+                TempData["error"] = "Quotation not found";
+                return NotFound();
+            }
+
+            var customerProject = await _context.customerProjects.FindAsync(quotation.CustomerProjectId);
+
+            if (customerProject != null)
+            {
+                customerProject.Status = "Pending Payment";
+            }
+
+            quotation.Status = "Quotation Accepted";
+            await _context.SaveChangesAsync();
+            TempData["success"] = "Quotation Accepted";
+
+            var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var projectId = quotation.CustomerProjectId;
+            return RedirectToAction("CreatePayment", "Payments", new { customerId = customerId, projectId = projectId, amount = quotation.TotalCost });
         }
+
 
         // Decline Quotation
         [HttpPost]
-        public IActionResult DeclineQuotation(int quotationId)
+        public async Task<IActionResult> DeclineQuotation(int id)
         {
-            var quotation = _context.quotations.Find(quotationId);
+            var quotation = await _context.quotations.FindAsync(id);
+
             if (quotation != null)
             {
-                quotation.Status = "Declined";
-                _context.SaveChanges();
+                quotation.Status = "Quotation Declined";
+                await _context.SaveChangesAsync();
                 TempData["success"] = "Quotation Declined";
+
+                // Optionally, you can redirect to a different page after declining the quotation.
+                return RedirectToAction("CustomerProjectProgress", "CustomerProjects");
             }
-            return RedirectToAction("Details", new { id = quotationId });
+
+            return NotFound();
         }
+
     }
 }

@@ -4,22 +4,72 @@
     <h2 class="text-center mb-4">Quotation Details</h2>
 
     <div class="card shadow-sm">
+        <input type="hidden" asp-for="QuotationId" />
         <div class="card-body">
-            @* <h5 class="card-title">Customer Project: @Model.customerProject.Project.ProjectName</h5> *@
-            <p class="card-text">Total Cost: R @Model.TotalCost</p>
-            <p class="card-text">Date Created: @Model.CreatedDate.ToShortDateString()</p>
-            <p class="card-text">Status: <span class="badge bg-info">@Model.Status</span></p>
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.CreatedDate.ToShortDateString() <!-- Formatting the date -->
+                </dd>
+
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.TotalCost)
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.TotalCost.ToString("C") <!-- Formatting as currency -->
+                </dd>
+
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Status
+                </dd>
+            </dl>
+
+            <h4 class="py-3">Resources</h4>
+            <ul class="list-group">
+                @if (Model.QuotationResources != null)
+                {
+                    <ul class="list-group">
+                        @foreach (var resource in Model.QuotationResources)
+                        {
+                            <li class="list-group-item">
+                                @resource.Resource.Name - Quantity: @resource.Quantity, Unit Price: @resource.Resource.PricePerUnit.ToString("C")
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>No resources associated with this quotation.</p>
+                }
+            </ul>
         </div>
     </div>
 
     <div class="mt-4">
-                <form method="post" asp-action="AcceptQuotation"  class="d-inline">
-        <button type="submit" class="btn btn-success">Accept Quotation</button>
-        </form>
-        <form method="post" asp-action="DeclineQuotation" asp-route-id="@Model.QuotationId" class="d-inline">
-        <button type="submit" class="btn btn-danger">Decline Quotation</button>
-        </form>
-        <a class="btn btn-primary mt-3" asp-area="" asp-controller="CustomerProjects" asp-action="CustomerProjectProgress">Back to Project List</a>
+        @if (Model.Status != "Quotation Accepted" && Model.Status != "Quotation Declined")
+        {
+            <form method="post" asp-controller="Quotations" asp-action="AcceptQuotation" asp-route-id="@Model.QuotationId" class="d-inline">
+                <button type="submit" class="btn btn-success">Accept Quotation</button>
+            </form>
+
+            <!-- Decline Quotation -->
+            <form method="post" asp-controller="Quotations" asp-action="DeclineQuotation" asp-route-id="@Model.QuotationId" class="d-inline">
+                <button type="submit" class="btn btn-danger">Decline Quotation</button>
+            </form>
+
+            <!-- Back to Project List -->
+            <a class="btn btn-primary mt-3" asp-area="" asp-controller="CustomerProjects" asp-action="CustomerProjectProgress">Back to Project List</a>
+        }
+        else
+        {
+
+            <a class="btn btn-primary mt-3" asp-area="" asp-controller="CustomerProjects" asp-action="CustomerProjectProgress">Back to Project List</a>
+        }
     </div>
 
 </div>

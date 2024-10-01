@@ -346,5 +346,23 @@ namespace Thuthuka_Construction.Controllers
         {
             return _context.projects.Any(e => e.ProjectId == id);
         }
+
+
+        public async Task<IActionResult> MoreDetails(int customerProjectId)
+        {
+            // Find the project by its ID
+            var project = await _context.customerProjects
+                .FirstOrDefaultAsync(p => p.CustomerProjectId == customerProjectId);
+
+            // Check if the project exists
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            // Pass the project data to the view
+            return View(project);
+        }
+
     }
 }
