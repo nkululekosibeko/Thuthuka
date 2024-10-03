@@ -284,5 +284,48 @@ namespace Thuthuka_Construction.Controllers
             return NotFound();
         }
 
+
+        // GET: Quotations/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var quotation = await _context.quotations
+                .Include(q => q.CustomerProject)
+                .FirstOrDefaultAsync(m => m.QuotationId == id);
+
+            if (quotation == null)
+            {
+                return NotFound();
+            }
+
+            return View(quotation); // Will display a confirmation view
+        }
+
+        // POST: Quotations/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var quotation = await _context.quotations.FindAsync(id);
+
+        //    if (quotation != null)
+        //    {
+        //        _context.quotations.Remove(quotation);
+        //        await _context.SaveChangesAsync();
+        //        TempData["success"] = "Quotation Deleted Successfully";
+        //    }
+        //    else
+        //    {
+        //        TempData["error"] = "Quotation not found.";
+        //    }
+
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+
     }
 }
