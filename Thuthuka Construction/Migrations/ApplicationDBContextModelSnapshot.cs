@@ -257,7 +257,7 @@ namespace Thuthuka_Construction.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("customerProjects");
+                    b.ToTable("customerProjects", (string)null);
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.Progress", b =>
@@ -268,9 +268,8 @@ namespace Thuthuka_Construction.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgressId"));
 
-                    b.Property<string>("CurrentPhase")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CurrentPhase")
+                        .HasColumnType("int");
 
                     b.Property<int>("CustomerProjectId")
                         .HasColumnType("int");
@@ -282,7 +281,7 @@ namespace Thuthuka_Construction.Migrations
 
                     b.HasIndex("CustomerProjectId");
 
-                    b.ToTable("progresses");
+                    b.ToTable("progresses", (string)null);
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.Project", b =>
@@ -324,7 +323,7 @@ namespace Thuthuka_Construction.Migrations
 
                     b.HasIndex("ProjectTypeId");
 
-                    b.ToTable("projects");
+                    b.ToTable("projects", (string)null);
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.ProjectType", b =>
@@ -341,7 +340,7 @@ namespace Thuthuka_Construction.Migrations
 
                     b.HasKey("ProjectTypeId");
 
-                    b.ToTable("projectTypes");
+                    b.ToTable("projectTypes", (string)null);
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.Quatation", b =>
@@ -366,6 +365,9 @@ namespace Thuthuka_Construction.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateOnly>("SelectDate")
+                        .HasColumnType("date");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -379,7 +381,7 @@ namespace Thuthuka_Construction.Migrations
 
                     b.HasIndex("ForemanId");
 
-                    b.ToTable("quatations");
+                    b.ToTable("quatations", (string)null);
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.ApplicationUser", b =>
@@ -481,13 +483,13 @@ namespace Thuthuka_Construction.Migrations
 
             modelBuilder.Entity("Thuthuka_Construction.Models.Progress", b =>
                 {
-                    b.HasOne("Thuthuka_Construction.Models.CustomerProject", "customerProject")
+                    b.HasOne("Thuthuka_Construction.Models.CustomerProject", "CustomerProject")
                         .WithMany()
                         .HasForeignKey("CustomerProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("customerProject");
+                    b.Navigation("CustomerProject");
                 });
 
             modelBuilder.Entity("Thuthuka_Construction.Models.Project", b =>
